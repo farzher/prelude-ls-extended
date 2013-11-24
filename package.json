@@ -1,5 +1,5 @@
 {
-  "name": "Preludels-Extended",
+  "name": "preludels-extended",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/farzher/Preludels-Extended.git"
+    "url": "https://github.com/farzher/preludels-extended.git"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/farzher/Preludels-Extended/issues"
+    "url": "https://github.com/farzher/preludels-extended/issues"
   },
   "dependencies": {
     "prelude-ls": "~1.0.3"
