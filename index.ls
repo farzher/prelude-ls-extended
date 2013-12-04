@@ -1,21 +1,38 @@
 _ = require 'prelude-ls'
 Url = require 'url'
 
+
 # Url
+
+# from, to -> String
 _.url-resolve = -> Url.resolve.apply @, arguments
-_.url-parse = -> Url.parse it, false, true
-_.parsed-to-uri = -> it.path + (it.hash or '')
+
+# -> parsed
+_.url-parse = (url) -> Url.parse url, false, true
+
+# -> uri
+_.parsed-to-uri = (parsed) -> parsed.path + (parsed.hash or '')
+
+# url -> uri
 _.url-to-uri = _.url-parse >> _.parsed-to-uri
 
+
 # Regex
+
+# -> []
 _.regex-match = (regex, str) --> str.match regex or []
+
+# -> []
 _.regex-exec = (regex, str, key=null) ->
 	results = []
 	while tmp = regex.exec str
 		results.push (if key? then tmp[key] else tmp)
 	results
 
+
 # List
+
+# -> []
 _.unique-by = (func, list) -->
 	seen = []
 	for item in list
@@ -24,14 +41,26 @@ _.unique-by = (func, list) -->
 		seen.push value
 		item
 
+
 # Util
-_.db-bool = (v) -> if v then 1 else 0
+
+# -> Int
+_.db-bool = (val) -> if val then 1 else 0
+
+# -> Int
 _.rand = (min, max=null) ->
 	[min, max] = [0, min] if not max?
 	Math.floor (Math.random! * (max - min + 1) + min)
-_.chance = (f=0.5) -> Math.random! < f
-_.chr = (n) -> String.from-char-code n
-_.ord = (c) -> c.char-code-at 0
+
+# -> Boolean
+_.chance = (num=0.5) -> Math.random! < num
+
+# -> String
+_.chr = (int) -> String.from-char-code int
+
+# -> Int
+_.ord = (str) -> str.char-code-at 0
+
 
 # Flip
 _.flip-each = _.flip _.each

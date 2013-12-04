@@ -5,11 +5,11 @@ Url = require('url');
 _.urlResolve = function(){
   return Url.resolve.apply(this, arguments);
 };
-_.urlParse = function(it){
-  return Url.parse(it, false, true);
+_.urlParse = function(url){
+  return Url.parse(url, false, true);
 };
-_.parsedToUri = function(it){
-  return it.path + (it.hash || '');
+_.parsedToUri = function(parsed){
+  return parsed.path + (parsed.hash || '');
 };
 _.urlToUri = function(){
   return _.parsedToUri(_.urlParse.apply(this, arguments));
@@ -40,8 +40,8 @@ _.uniqueBy = curry$(function(func, list){
   }
   return results$;
 });
-_.dbBool = function(v){
-  if (v) {
+_.dbBool = function(val){
+  if (val) {
     return 1;
   } else {
     return 0;
@@ -55,15 +55,15 @@ _.rand = function(min, max){
   }
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
-_.chance = function(f){
-  f == null && (f = 0.5);
-  return Math.random() < f;
+_.chance = function(num){
+  num == null && (num = 0.5);
+  return Math.random() < num;
 };
-_.chr = function(n){
-  return String.fromCharCode(n);
+_.chr = function(int){
+  return String.fromCharCode(int);
 };
-_.ord = function(c){
-  return c.charCodeAt(0);
+_.ord = function(str){
+  return str.charCodeAt(0);
 };
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
