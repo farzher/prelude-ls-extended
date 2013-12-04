@@ -2,11 +2,6 @@
 var _, Url;
 _ = require('prelude-ls');
 Url = require('url');
-_.flipEach = _.flip(_.each);
-_.flipMap = _.flip(_.map);
-_.flipReject = _.flip(_.reject);
-_.flipFilter = _.flip(_.filter);
-_.flipSetTimeout = _.flip(_.setTimeout);
 _.urlResolve = function(){
   return Url.resolve.apply(this, arguments);
 };
@@ -19,9 +14,9 @@ _.parsedToUri = function(it){
 _.urlToUri = function(){
   return _.parsedToUri(_.urlParse.apply(this, arguments));
 };
-_.regexMatch = function(regex, str){
+_.regexMatch = curry$(function(regex, str){
   return str.match(regex) || [];
-};
+});
 _.regexExec = function(regex, str, key){
   var results, tmp;
   key == null && (key = null);
@@ -31,7 +26,7 @@ _.regexExec = function(regex, str, key){
   }
   return results;
 };
-_.uniqueBy = function(func, list){
+_.uniqueBy = curry$(function(func, list){
   var seen, i$, len$, item, value, results$ = [];
   seen = [];
   for (i$ = 0, len$ = list.length; i$ < len$; ++i$) {
@@ -44,17 +39,22 @@ _.uniqueBy = function(func, list){
     results$.push(item);
   }
   return results$;
-};
-_.dbBool = function(it){
-  if (it) {
+});
+_.dbBool = function(v){
+  if (v) {
     return 1;
   } else {
     return 0;
   }
 };
-_.rand = curry$(function(min, max){
+_.rand = function(min, max){
+  var ref$;
+  max == null && (max = null);
+  if (max == null) {
+    ref$ = [0, min], min = ref$[0], max = ref$[1];
+  }
   return Math.floor(Math.random() * (max - min + 1) + min);
-});
+};
 _.chance = function(f){
   f == null && (f = 0.5);
   return Math.random() < f;
@@ -65,12 +65,12 @@ _.chr = function(n){
 _.ord = function(c){
   return c.charCodeAt(0);
 };
+_.flipEach = _.flip(_.each);
+_.flipMap = _.flip(_.map);
+_.flipReject = _.flip(_.reject);
+_.flipFilter = _.flip(_.filter);
+_.flipSetTimeout = _.flip(_.setTimeout);
 module.exports = _;
-function in$(x, xs){
-  var i = -1, l = xs.length >>> 0;
-  while (++i < l) if (x === xs[i]) return true;
-  return false;
-}
 function curry$(f, bound){
   var context,
   _curry = function(args) {
@@ -83,4 +83,9 @@ function curry$(f, bound){
     } : f;
   };
   return _curry();
+}
+function in$(x, xs){
+  var i = -1, l = xs.length >>> 0;
+  while (++i < l) if (x === xs[i]) return true;
+  return false;
 }
