@@ -40,13 +40,6 @@ _.uniqueBy = curry$(function(func, list){
   }
   return results$;
 });
-_.dbBool = function(val){
-  if (val) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
 _.rand = function(min, max){
   var ref$;
   max == null && (max = null);
@@ -64,6 +57,16 @@ _.chr = function(int){
 };
 _.ord = function(str){
   return str.charCodeAt(0);
+};
+_.isInsensitive = function(a, b){
+  return a.toUpperCase() === b.toUpperCase();
+};
+_.dbBool = function(val){
+  if (val) {
+    return 1;
+  } else {
+    return 0;
+  }
 };
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);

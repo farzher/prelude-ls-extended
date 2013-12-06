@@ -2,7 +2,8 @@ _ = require 'prelude-ls'
 Url = require 'url'
 
 
-# Url
+
+## Url
 
 # from, to -> String
 _.url-resolve = -> Url.resolve.apply @, arguments
@@ -17,7 +18,8 @@ _.parsed-to-uri = (parsed) -> parsed.path + (parsed.hash or '')
 _.url-to-uri = _.url-parse >> _.parsed-to-uri
 
 
-# Regex
+
+## Regex
 
 # -> []
 _.regex-match = (regex, str) --> str.match regex or []
@@ -30,7 +32,8 @@ _.regex-exec = (regex, str, key=null) ->
 	results
 
 
-# List
+
+## List
 
 # -> []
 _.unique-by = (func, list) -->
@@ -42,10 +45,8 @@ _.unique-by = (func, list) -->
 		item
 
 
-# Util
 
-# -> Int
-_.db-bool = (val) -> if val then 1 else 0
+## Number
 
 # -> Int
 _.rand = (min, max=null) ->
@@ -55,14 +56,26 @@ _.rand = (min, max=null) ->
 # -> Boolean
 _.chance = (num=0.5) -> Math.random! < num
 
+
+
+## String
+
 # -> String
 _.chr = (int) -> String.from-char-code int
 
 # -> Int
 _.ord = (str) -> str.char-code-at 0
 
+# -> Boolean
+_.is-insensitive = (a, b) -> a.to-upper-case! is b.to-upper-case!
 
-# Flip
+
+
+## Util
+
+# -> Int
+_.db-bool = (val) -> if val then 1 else 0
+
 _.flip-each = _.flip _.each
 _.flip-map = _.flip _.map
 _.flip-reject = _.flip _.reject
