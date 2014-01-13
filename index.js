@@ -52,6 +52,13 @@ _.chance = function(num){
   num == null && (num = 0.5);
   return Math.random() < num;
 };
+_.negateIf = function(b, x){
+  if (b) {
+    return -x;
+  } else {
+    return x;
+  }
+};
 _.chr = function(int){
   return String.fromCharCode(int);
 };

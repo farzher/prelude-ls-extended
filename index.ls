@@ -56,6 +56,8 @@ _.rand = (min, max=null) ->
 # -> Boolean
 _.chance = (num=0.5) -> Math.random! < num
 
+# -> Number
+_.negate-if = (b, x) -> if b then -x else x
 
 
 ## String
