@@ -68,6 +68,9 @@ _.ord = function(str){
 _.isInsensitive = function(a, b){
   return a.toUpperCase() === b.toUpperCase();
 };
+_.capitalize = function(str){
+  return str.substr(0, 1).toUpperCase() + str.substr(1);
+};
 _.dbBool = function(val){
   if (val) {
     return 1;
@@ -75,6 +78,7 @@ _.dbBool = function(val){
     return 0;
   }
 };
+_.isArray = _.isType('Array');
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
 _.flipReject = _.flip(_.reject);
