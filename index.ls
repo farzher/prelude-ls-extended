@@ -59,6 +59,16 @@ _.regex-exec = (regex, str, key=null) ->
 
 
 
+## List & Obj
+
+# -> Int
+_.index-by = (f, item) ->
+	if _.is-type 'Object', item
+		list = _.values item
+		index = _.elem-index (f list), list
+		return (_.keys item)[index]
+	else
+		return _.elem-index (f item), item
 
 
 
