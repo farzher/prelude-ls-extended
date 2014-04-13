@@ -45,14 +45,15 @@ _.regex-exec = (regex, str, key=null) ->
 
 ## List
 
-# -> []
-_.unique-by = (func, list) -->
-	seen = []
-	for item in list
-		value = func item
-		continue if value in seen
-		seen.push value
-		item
+
+
+
+
+
+
+
+
+## Obj
 
 
 

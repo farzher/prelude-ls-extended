@@ -16,6 +16,6 @@
     "url": "https://github.com/farzher/prelude-ls-extended/issues"
   },
   "dependencies": {
-    "prelude-ls": "~1.0.3"
+    "prelude-ls": "~1.1.1"
   }
 }

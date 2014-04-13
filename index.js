@@ -26,20 +26,6 @@ _.regexExec = function(regex, str, key){
   }
   return results;
 };
-_.uniqueBy = curry$(function(func, list){
-  var seen, i$, len$, item, value, results$ = [];
-  seen = [];
-  for (i$ = 0, len$ = list.length; i$ < len$; ++i$) {
-    item = list[i$];
-    value = func(item);
-    if (in$(value, seen)) {
-      continue;
-    }
-    seen.push(value);
-    results$.push(item);
-  }
-  return results$;
-});
 _.rand = function(min, max){
   var ref$;
   max == null && (max = null);
@@ -97,9 +83,4 @@ function curry$(f, bound){
     } : f;
   };
   return _curry();
-}
-function in$(x, xs){
-  var i = -1, l = xs.length >>> 0;
-  while (++i < l) if (x === xs[i]) return true;
-  return false;
 }
