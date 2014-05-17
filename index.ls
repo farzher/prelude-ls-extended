@@ -1,5 +1,6 @@
 _ = require 'prelude-ls'
 Url = require 'url'
+crypto = require 'crypto'
 
 
 ## Url
@@ -26,14 +27,12 @@ _.url-to-uri = _.url-parse >> _.parsed-to-uri
 ## Regex
 
 # -> []
-_.regex-match = (regex, str) --> str.match regex or []
+_.regex-match = (regex, str) -> str.match regex or []
 
 # -> []
 _.regex-exec = (regex, str, key=null) ->
-	results = []
-	while tmp = regex.exec str
-		results.push (if key? then tmp[key] else tmp)
-	results
+	return while tmp = regex.exec str
+		if key? then tmp[key] else tmp
 
 
 
@@ -45,6 +44,16 @@ _.regex-exec = (regex, str, key=null) ->
 
 ## List
 
+# Array -> Array
+_.clone = -> it.slice 0
+
+# -> [Int, Int]
+_.get2D = (i, width) -> [i % width, (Math.floor i / width)]
+
+# -> Int
+_.get1D = (x, y, width) -> x + y * width
+
+
 
 
 
@@ -54,21 +63,6 @@ _.regex-exec = (regex, str, key=null) ->
 
 
 ## Obj
-
-
-
-
-
-## List & Obj
-
-# -> Int
-_.index-by = (f, item) ->
-	if _.is-type 'Object', item
-		list = _.values item
-		index = _.elem-index (f list), list
-		return (_.keys item)[index]
-	else
-		return _.elem-index (f item), item
 
 
 
@@ -124,6 +118,11 @@ _.db-bool = (val) -> if val then 1 else 0
 # -> Boolean
 _.is-array = _.is-type 'Array'
 
+# -> Int
+_.bool2int = (b) -> if b then 1 else 0
+
+# -> String
+_.md5 = (val) -> crypto.create-hash 'md5' .update val .digest 'hex'
 
 
 

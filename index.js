@@ -14,27 +14,32 @@ _.parsedToUri = function(parsed){
 _.urlToUri = function(){
   return _.parsedToUri(_.urlParse.apply(this, arguments));
 };
-_.regexMatch = curry$(function(regex, str){
+_.regexMatch = function(regex, str){
   return str.match(regex) || [];
-});
-_.regexExec = function(regex, str, key){
-  var results, tmp;
-  key == null && (key = null);
-  results = [];
-  while (tmp = regex.exec(str)) {
-    results.push(key != null ? tmp[key] : tmp);
-  }
-  return results;
 };
-_.indexBy = function(f, item){
-  var list, index;
-  if (_.isType('Object', item)) {
-    list = _.values(item);
-    index = _.elemIndex(f(list), list);
-    return _.keys(item)[index];
-  } else {
-    return _.elemIndex(f(item), item);
-  }
+_.regexExec = function(regex, str, key){
+  var tmp;
+  key == null && (key = null);
+  return (function(){
+    var results$ = [];
+    while (tmp = regex.exec(str)) {
+      if (key != null) {
+        results$.push(tmp[key]);
+      } else {
+        results$.push(tmp);
+      }
+    }
+    return results$;
+  }());
+};
+_.clone = function(it){
+  return it.slice(0);
+};
+_.get2D = function(i, width){
+  return [i % width, Math.floor(i / width)];
+};
+_.get1D = function(x, y, width){
+  return x + y * width;
 };
 _.rand = function(min, max){
   var ref$;
@@ -75,22 +80,16 @@ _.dbBool = function(val){
   }
 };
 _.isArray = _.isType('Array');
+_.bool2int = function(b){
+  if (b) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
 _.flipReject = _.flip(_.reject);
 _.flipFilter = _.flip(_.filter);
 _.flipSetTimeout = _.flip(_.setTimeout);
 module.exports = _;
-function curry$(f, bound){
-  var context,
-  _curry = function(args) {
-    return f.length > 1 ? function(){
-      var params = args ? args.concat() : [];
-      context = bound ? context || this : this;
-      return params.push.apply(params, arguments) <
-          f.length && arguments.length ?
-        _curry.call(context, params) : f.apply(context, params);
-    } : f;
-  };
-  return _curry();
-}
