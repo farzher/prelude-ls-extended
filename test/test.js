@@ -36,10 +36,12 @@ exports.shuffle = function(it){
   var arr, shuffled, i$, len$, v, index;
   arr = [1, 2, 3, 'a', 'b', 'c'];
   shuffled = _.shuffle(_.clone(arr));
+  it.strictEqual(arr.length, shuffled.length, 'Length of shuffled array should be the same');
   for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
     v = arr[i$];
     index = _.elemIndex(v, shuffled);
     it.ok(index != null, 'Every element in the original array should be in the shuffled array');
   }
+  it.strictEqual(_.shuffle([]).length, 0, 'Shuffling an empty array should not cause a problem');
   return it.done();
 };
