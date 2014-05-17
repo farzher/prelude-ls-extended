@@ -28,5 +28,7 @@ exports.regexExec = function(it){
   it.strictEqual(temp.length, 3);
   it.strictEqual(temp[2][0], 'ab');
   it.strictEqual(temp[2][1], 'b');
+  temp = _.regexExec(/href="(.*?)"/g, '<a id="pants" href="something.com">lol</a>', 1);
+  it.strictEqual(temp[0], 'something.com');
   return it.done();
 };

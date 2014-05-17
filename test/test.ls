@@ -18,8 +18,12 @@ exports import
 		it.strictEqual (_.regex-match /does not exist/, \ababab).length, 0
 		it.done!
 	regex-exec: ->
+		# No key
 		temp = _.regex-exec /a(b)/g, \ababab
 		it.strictEqual temp.length, 3
 		it.strictEqual temp.2.0, \ab
 		it.strictEqual temp.2.1, \b
+		# With key
+		temp = _.regex-exec /href="(.*?)"/g, '<a id="pants" href="something.com">lol</a>', 1
+		it.strictEqual temp.0, 'something.com'
 		it.done!
