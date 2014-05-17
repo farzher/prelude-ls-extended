@@ -5,8 +5,8 @@ crypto = require 'crypto'
 
 ## Url
 
-# from, to -> String
-_.url-resolve = -> Url.resolve.apply @, arguments
+# -> String
+_.url-resolve = (from-str, to-str) -> Url.resolve from-str, to-str
 
 # -> parsed
 _.url-parse = (url) -> Url.parse url, false, true

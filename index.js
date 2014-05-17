@@ -3,8 +3,8 @@ var _, Url, crypto;
 _ = require('prelude-ls');
 Url = require('url');
 crypto = require('crypto');
-_.urlResolve = function(){
-  return Url.resolve.apply(this, arguments);
+_.urlResolve = function(fromStr, toStr){
+  return Url.resolve(fromStr, toStr);
 };
 _.urlParse = function(url){
   return Url.parse(url, false, true);
