@@ -32,3 +32,14 @@ exports.regexExec = function(it){
   it.strictEqual(temp[0], 'something.com');
   return it.done();
 };
+exports.shuffle = function(it){
+  var arr, shuffled, i$, len$, v, index;
+  arr = [1, 2, 3, 'a', 'b', 'c'];
+  shuffled = _.shuffle(_.clone(arr));
+  for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
+    v = arr[i$];
+    index = _.elemIndex(v, shuffled);
+    it.ok(index != null, 'Every element in the original array should be in the shuffled array');
+  }
+  return it.done();
+};

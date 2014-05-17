@@ -42,6 +42,17 @@ _.get2D = function(i, width){
 _.get1D = function(x, y, width){
   return x + y * width;
 };
+_.shuffle = function(arr){
+  var j, x, i;
+  j = x = i = arr.length;
+  while (i) {
+    j = Math.floor(Math.random() * i);
+    x = arr[--i];
+    arr[i] = arr[j];
+    arr[j] = x;
+  }
+  return arr;
+};
 _.rand = function(min, max){
   var ref$;
   max == null && (max = null);

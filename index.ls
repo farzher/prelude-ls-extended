@@ -44,7 +44,7 @@ _.regex-exec = (regex, str, key=null) ->
 
 ## List
 
-# Array -> Array
+# [] -> []
 _.clone = -> it.slice 0
 
 # -> [Int, Int]
@@ -53,7 +53,15 @@ _.get2D = (i, width) -> [i % width, (Math.floor i / width)]
 # -> Int
 _.get1D = (x, y, width) -> x + y * width
 
-
+# -> []
+_.shuffle = (arr) ->
+	j = x = i = arr.length
+	while i
+		j = Math.floor Math.random! * i
+		x = arr[--i]
+		arr[i] = arr[j]
+		arr[j] = x
+	return arr
 
 
 

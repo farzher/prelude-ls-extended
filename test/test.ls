@@ -27,3 +27,10 @@ exports import
 		temp = _.regex-exec /href="(.*?)"/g, '<a id="pants" href="something.com">lol</a>', 1
 		it.strictEqual temp.0, 'something.com'
 		it.done!
+	shuffle: ->
+		arr = [1, 2, 3, \a, \b, \c]
+		shuffled = _.shuffle _.clone arr
+		for v in arr
+			index = _.elem-index v, shuffled
+			it.ok index?, 'Every element in the original array should be in the shuffled array'
+		it.done!
