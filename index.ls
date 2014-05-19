@@ -1,25 +1,4 @@
 _ = require 'prelude-ls'
-Url = require 'url'
-crypto = require 'crypto'
-
-
-## Url
-
-# -> String
-_.url-resolve = (from-str, to-str) -> Url.resolve from-str, to-str
-
-# -> parsed
-_.url-parse = (url) -> Url.parse url, false, true
-
-# -> uri
-_.parsed-to-uri = (parsed) -> parsed.path + (parsed.hash or '')
-
-# url -> uri
-_.url-to-uri = _.url-parse >> _.parsed-to-uri
-
-
-
-
 
 
 
@@ -127,9 +106,6 @@ _.is-array = _.is-type 'Array'
 
 # -> Int
 _.bool2int = (b) -> if b then 1 else 0
-
-# -> String
-_.md5 = (val) -> crypto.create-hash 'md5' .update val .digest 'hex'
 
 
 
