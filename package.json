@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodeunit",
     "cover": "istanbul cover ./node_modules/nodeunit/bin/nodeunit && cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
-    "build": "browserify index.js -o browser.js -s prelude-ls-extended && uglifyjs browser.js -o browser.min.js && rm browser.js"
+    "build": "browserify index.js -o browser.js -s prelude-ls-extended && uglifyjs browser.js -m -c -o browser.min.js && rm browser.js"
   },
   "repository": {
     "type": "git",
