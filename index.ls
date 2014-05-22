@@ -98,9 +98,6 @@ _.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
 
 ## Util
 
-# -> Int
-_.db-bool = (val) -> if val then 1 else 0
-
 # -> Boolean
 _.is-array = _.is-type 'Array'
 

@@ -70,13 +70,6 @@ _.isInsensitive = function(a, b){
 _.capitalize = function(str){
   return str.substr(0, 1).toUpperCase() + str.substr(1);
 };
-_.dbBool = function(val){
-  if (val) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
 _.isArray = _.isType('Array');
 _.bool2int = function(b){
   if (b) {
