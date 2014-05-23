@@ -71,7 +71,7 @@ _.capitalize = function(str){
   return str.substr(0, 1).toUpperCase() + str.substr(1);
 };
 _.isArray = _.isType('Array');
-_.bool2int = function(b){
+_.boolToInt = function(b){
   if (b) {
     return 1;
   } else {

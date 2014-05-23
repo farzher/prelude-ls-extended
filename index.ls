@@ -102,7 +102,7 @@ _.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
 _.is-array = _.is-type 'Array'
 
 # -> Int
-_.bool2int = (b) -> if b then 1 else 0
+_.bool-to-int = (b) -> if b then 1 else 0
 
 
 
