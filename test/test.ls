@@ -19,8 +19,8 @@ exports import
 		a = [1, 2, 3, \a, \b, \c, {a: 1}, [1, 2]]
 		b = _.clone a
 		for i til a.length => it.strictEqual a[i], b[i], 'Every element in each array should be the same'
-		temp = a.0; b.0 = null; it.strictEqual a.0, temp, 'Changing cloned array should not affect original'
-		temp = b.0; a.0 = null; it.strictEqual b.0, temp, 'Changing original array should not affect cloned'
+		temp = a.0; b.0 = \x; it.strictEqual a.0, temp, 'Changing cloned array should not affect original'
+		temp = b.0; a.0 = \z; it.strictEqual b.0, temp, 'Changing original array should not affect cloned'
 		it.done!
 	shuffle: ->
 		arr = [1, 2, 3, \a, \b, \c]
