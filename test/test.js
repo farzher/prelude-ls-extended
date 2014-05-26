@@ -16,6 +16,26 @@ exports.regexExec = function(it){
   it.strictEqual(temp[0], 'something.com');
   return it.done();
 };
+exports.clone = function(it){
+  var a, b, i$, to$, i, temp;
+  a = [
+    1, 2, 3, 'a', 'b', 'c', {
+      a: 1
+    }, [1, 2]
+  ];
+  b = _.clone(a);
+  for (i$ = 0, to$ = a.length; i$ < to$; ++i$) {
+    i = i$;
+    it.strictEqual(a[i], b[i], 'Every element in each array should be the same');
+  }
+  temp = a[0];
+  b[0] = null;
+  it.strictEqual(a[0], temp, 'Changing cloned array should not affect original');
+  temp = b[0];
+  a[0] = null;
+  it.strictEqual(b[0], temp, 'Changing original array should not affect cloned');
+  return it.done();
+};
 exports.shuffle = function(it){
   var arr, shuffled, i$, len$, v, index;
   arr = [1, 2, 3, 'a', 'b', 'c'];
