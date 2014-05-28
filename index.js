@@ -5,19 +5,16 @@ _.regexMatch = function(regex, str){
   return str.match(regex) || [];
 };
 _.regexExec = function(regex, str, key){
-  var tmp;
+  var tmp, results$ = [];
   key == null && (key = null);
-  return (function(){
-    var results$ = [];
-    while (tmp = regex.exec(str)) {
-      if (key != null) {
-        results$.push(tmp[key]);
-      } else {
-        results$.push(tmp);
-      }
+  while (tmp = regex.exec(str)) {
+    if (key != null) {
+      results$.push(tmp[key]);
+    } else {
+      results$.push(tmp);
     }
-    return results$;
-  }());
+  }
+  return results$;
 };
 _.clone = function(it){
   return it.slice(0);

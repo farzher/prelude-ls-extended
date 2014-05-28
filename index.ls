@@ -9,9 +9,7 @@ _ = require 'prelude-ls'
 _.regex-match = (regex, str) -> str.match regex or []
 
 # -> []
-_.regex-exec = (regex, str, key=null) ->
-	return while tmp = regex.exec str
-		if key? then tmp[key] else tmp
+_.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
 
 
 
@@ -60,7 +58,7 @@ _.shuffle = (arr) ->
 # -> Int
 _.rand = (min, max=null) ->
 	[min, max] = [0, min] if not max?
-	Math.floor (Math.random! * (max - min + 1) + min)
+	return Math.floor (Math.random! * (max - min + 1) + min)
 
 # -> Boolean
 _.chance = (num=0.5) -> Math.random! < num
