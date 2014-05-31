@@ -36,6 +36,16 @@ _.shuffle = function(arr){
   }
   return arr;
 };
+_.indexBy = function(f, item){
+  var list, index;
+  if (_.isType('Object', item)) {
+    list = _.values(item);
+    index = _.elemIndex(f(list), list);
+    return _.keys(item)[index];
+  } else {
+    return _.elemIndex(f(item), item);
+  }
+};
 _.rand = function(min, max){
   var ref$;
   max == null && (max = null);
