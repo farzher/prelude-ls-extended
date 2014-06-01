@@ -49,3 +49,15 @@ exports.shuffle = function(it){
   it.strictEqual(_.shuffle([]).length, 0, 'Shuffling an empty array should not cause a problem');
   return it.done();
 };
+exports.indexBy = function(it){
+  var list, obj;
+  list = [1, 9, 3];
+  it.strictEqual(_.indexBy(_.maximum, list), 1, 'Index of highest number is 1');
+  obj = {
+    butts: 1,
+    cats: 9,
+    rocks: 3
+  };
+  it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
+  return it.done();
+};

@@ -31,3 +31,9 @@ exports import
 			it.ok index?, 'Every element in the original array should be in the shuffled array'
 		it.strictEqual (_.shuffle []).length, 0, 'Shuffling an empty array should not cause a problem'
 		it.done!
+	index-by: ->
+		list = [1, 9, 3]
+		it.strictEqual (_.index-by _.maximum, list), 1, 'Index of highest number is 1'
+		obj = {butts: 1, cats: 9, rocks: 3}
+		it.strictEqual (_.index-by _.minimum, obj), 'butts', 'Index of lowest number is butts'
+		it.done!
