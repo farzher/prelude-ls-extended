@@ -40,6 +40,12 @@ _.shuffle = (arr) ->
 		arr[j] = x
 	return arr
 
+# -> []
+_.where = (query, list) ->
+	_.filter ->
+		for k, v of query => return false if it[k] isnt v
+		return true
+	, list
 
 
 

@@ -36,6 +36,18 @@ _.shuffle = function(arr){
   }
   return arr;
 };
+_.where = function(query, list){
+  return _.filter(function(it){
+    var k, ref$, v;
+    for (k in ref$ = query) {
+      v = ref$[k];
+      if (it[k] !== v) {
+        return false;
+      }
+    }
+    return true;
+  }, list);
+};
 _.indexBy = function(f, item){
   var list, index;
   if (_.isType('Object', item)) {

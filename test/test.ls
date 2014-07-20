@@ -37,3 +37,13 @@ exports import
 		obj = {butts: 1, cats: 9, rocks: 3}
 		it.strictEqual (_.index-by _.minimum, obj), 'butts', 'Index of lowest number is butts'
 		it.done!
+	where: ->
+		list =
+			{a: 1, b: 2, c: 3, same: true}
+			{a: 4, b: 5, c: 6, same: true}
+		it.strictEqual (_.where {a: 1}, list).0, list.0
+		it.strictEqual (_.where {c: 6, b: 5}, list).0, list.1, 'Can find by multiple params'
+		it.strictEqual (_.where {c: 6, b: 1}, list).length, 0, 'All must be true'
+		it.strictEqual (_.where {same: true}, list).length, 2, 'Returns a list of all matches'
+		it.strictEqual (_.where {none: [{}]}, list).length, 0, 'Using unknown keys returns nothing'
+		it.done!
