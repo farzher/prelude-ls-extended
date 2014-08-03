@@ -47,3 +47,11 @@ exports import
 		it.strictEqual (_.where {same: true}, list).length, 2, 'Returns a list of all matches'
 		it.strictEqual (_.where {none: [{}]}, list).length, 0, 'Using unknown keys returns nothing'
 		it.done!
+	batch: ->
+		list = ['start', 1, 'a', {stuff: 'things'}, 2, 3, 1, 8, 3, 7, [2, 3], {}, [], 'end']
+		it.strictEqual (_.batch 3, list).1.0.stuff, 'things'
+		it.strictEqual (_.batch 2, list).length, list.length / 2
+		it.strictEqual (_.batch 1, list).length, list.length
+		it.strictEqual (_.batch list.length, list).length, 1
+		it.strictEqual (_.batch '-1', list).length, list.length, 'Batching by a broken amount should default to batching by 1'
+		it.done!

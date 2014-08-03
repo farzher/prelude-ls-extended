@@ -48,6 +48,20 @@ _.where = function(query, list){
     return true;
   }, list);
 };
+_.batch = function(count, list){
+  count = Number(count);
+  if (count < 1) {
+    count = 1;
+  }
+  list = _.clone(list);
+  return (function(){
+    var results$ = [];
+    while (list.length) {
+      results$.push(list.splice(0, count));
+    }
+    return results$;
+  }());
+};
 _.indexBy = function(f, item){
   var list, index;
   if (_.isType('Object', item)) {
