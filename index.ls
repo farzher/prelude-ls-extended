@@ -5,10 +5,10 @@ _ = require 'prelude-ls'
 
 ## Regex
 
-# -> [str ...] | [empty]
+# -> [str ...] or [empty]
 _.regex-matchs = (regex, str) -> str.match regex or []
 
-# -> if not key? => [[str ...]] else [str ...] | null
+# -> if not key? => [[str ...]] else [str ...] or null
 _.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
 
 
@@ -48,7 +48,7 @@ _.where = (query, list) ->
 		return true
 	, list
 
-# -> [[] ...] | [empty]
+# -> [[] ...] or [empty]
 _.batch = (count, list) ->
 	count = Number count; if count < 1 => return []
 	list = list.slice 0
