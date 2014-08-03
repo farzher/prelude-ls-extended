@@ -5,10 +5,10 @@ _ = require 'prelude-ls'
 
 ## Regex
 
-# -> []
-_.regex-match = (regex, str) -> str.match regex or []
+# -> [str ...] | [empty]
+_.regex-matchs = (regex, str) -> str.match regex or []
 
-# -> []
+# -> if not key? => [[str ...]] else [str ...] | null
 _.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
 
 
@@ -24,13 +24,14 @@ _.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? t
 # [] -> []
 _.clone = -> it.slice 0
 
-# -> [Int, Int]
+# -> [int, int]
 _.get2D = (i, width) -> [i % width, (Math.floor i / width)]
 
-# -> Int
+# -> int
 _.get1D = (x, y, width) -> x + y * width
 
 # -> []
+# @mutate
 _.shuffle = (arr) ->
 	j = x = i = arr.length
 	while i
@@ -47,6 +48,7 @@ _.where = (query, list) ->
 		return true
 	, list
 
+# -> [[] ...] | [empty]
 _.batch = (count, list) ->
 	count = Number count; if count < 1 => return []
 	list = list.slice 0
@@ -70,7 +72,7 @@ _.batch = (count, list) ->
 
 ## List & Obj
 
-# -> Int
+# -> int
 _.index-by = (f, item) ->
 	if _.is-type 'Object', item
 		list = _.values item
@@ -83,15 +85,15 @@ _.index-by = (f, item) ->
 
 ## Number
 
-# -> Int
+# -> int
 _.rand = (min, max=null) ->
 	[min, max] = [0, min] if not max?
 	return Math.floor (Math.random! * (max - min + 1) + min)
 
-# -> Boolean
+# -> bool
 _.chance = (num=0.5) -> Math.random! < num
 
-# -> Number
+# -> num
 _.negate-if = (b, x) -> if b then -x else x
 
 
@@ -104,16 +106,16 @@ _.negate-if = (b, x) -> if b then -x else x
 
 ## String
 
-# -> String
+# -> str
 _.chr = (int) -> String.from-char-code int
 
-# -> Int
+# -> int
 _.ord = (str) -> str.char-code-at 0
 
-# -> Boolean
+# -> bool
 _.is-insensitive = (a, b) -> a.to-upper-case! is b.to-upper-case!
 
-# -> String
+# -> str
 _.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
 
 
@@ -124,10 +126,10 @@ _.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
 
 ## Util
 
-# -> Boolean
+# -> bool
 _.is-array = _.is-type 'Array'
 
-# -> Int
+# -> int
 _.bool-to-int = (b) -> if b then 1 else 0
 
 
@@ -138,5 +140,8 @@ _.flip-map = _.flip _.map
 _.flip-reject = _.flip _.reject
 _.flip-filter = _.flip _.filter
 _.flip-set-timeout = _.flip _.set-timeout
+
+# Depreciated
+_.regex-match = (regex, str) -> str.match regex or []
 
 module.exports = _
