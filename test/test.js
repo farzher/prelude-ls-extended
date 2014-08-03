@@ -106,6 +106,6 @@ exports.batch = function(it){
   it.strictEqual(_.batch(2, list).length, list.length / 2);
   it.strictEqual(_.batch(1, list).length, list.length);
   it.strictEqual(_.batch(list.length, list).length, 1);
-  it.strictEqual(_.batch('-1', list).length, list.length, 'Batching by a broken amount should default to batching by 1');
+  it.strictEqual(_.batch('-1', list).length, 0, 'Batching by a broken amount should return []');
   return it.done();
 };

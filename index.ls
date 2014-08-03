@@ -48,8 +48,8 @@ _.where = (query, list) ->
 	, list
 
 _.batch = (count, list) ->
-	count = Number count; if count < 1 => count = 1
-	list = _.clone list
+	count = Number count; if count < 1 => return []
+	list = list.slice 0
 	return (while list.length => list.splice 0, count)
 
 

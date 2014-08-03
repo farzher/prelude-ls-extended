@@ -51,9 +51,9 @@ _.where = function(query, list){
 _.batch = function(count, list){
   count = Number(count);
   if (count < 1) {
-    count = 1;
+    return [];
   }
-  list = _.clone(list);
+  list = list.slice(0);
   return (function(){
     var results$ = [];
     while (list.length) {
