@@ -8,7 +8,7 @@ _ = require 'prelude-ls'
 # -> [str ...] or [empty]
 _.regex-matchs = (regex, str) -> str.match regex or []
 
-# -> if not key? => [[str ...]] else [str ...] or null
+# -> if not key? => [[str ...]] else [str ...]
 _.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
 
 
