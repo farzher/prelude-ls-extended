@@ -1,9 +1,9 @@
 _ = require \../index.js
 
 exports import
-	regex-match: ->
-		it.strictEqual (_.regex-match /a/g, \ababab).length, 3
-		it.strictEqual (_.regex-match /does not exist/, \ababab).length, 0
+	regex-matches: ->
+		it.strictEqual (_.regex-matches /a/g, \ababab).length, 3
+		it.strictEqual (_.regex-matches /does not exist/, \ababab).length, 0
 		it.done!
 	regex-exec: ->
 		# No key
