@@ -62,6 +62,49 @@ _.batch = function(count, list){
     return results$;
   }());
 };
+_.variance = function(it){
+  var avg, sum, i$, len$, v, x;
+  avg = _.mean(it);
+  sum = 0;
+  for (i$ = 0, len$ = it.length; i$ < len$; ++i$) {
+    v = it[i$];
+    x = v - avg;
+    sum += x * x;
+  }
+  return sum / it.length;
+};
+_.stdDeviation = function(it){
+  return Math.sqrt(_.variance(it));
+};
+_.inStdDeviation = function(a, m){
+  var avg, dev, i$, len$, v, results$ = [];
+  m == null && (m = 1);
+  avg = _.mean(a);
+  dev = _.stdDeviation(a);
+  for (i$ = 0, len$ = a.length; i$ < len$; ++i$) {
+    v = a[i$];
+    if (Math.abs(v - avg) > dev * m) {
+      results$.push(v);
+    }
+  }
+  return results$;
+};
+_.inStdDeviationBy = function(f, a, m){
+  var values, avg, dev, i$, len$, k, v, results$ = [];
+  m == null && (m = 1);
+  values = _.map(f)(
+  a);
+  avg = _.mean(values);
+  dev = _.stdDeviation(values);
+  for (i$ = 0, len$ = a.length; i$ < len$; ++i$) {
+    k = i$;
+    v = a[i$];
+    if (Math.abs(values[k] - avg) > dev * m) {
+      results$.push(v);
+    }
+  }
+  return results$;
+};
 _.indexBy = function(f, item){
   var list, index;
   if (_.isType('Object', item)) {

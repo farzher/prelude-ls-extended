@@ -54,6 +54,28 @@ _.batch = (count, list) ->
 	list = list.slice 0
 	return (while list.length => list.splice 0, count)
 
+# [] -> Number
+_.variance = ->
+	avg = _.mean it
+	sum = 0; for v in it => x = v - avg; sum += x*x;
+	sum / it.length
+
+# [] -> Number
+_.stdDeviation = -> Math.sqrt _.variance it
+
+# [] -> []
+_.inStdDeviation = (a, m=1) ->
+	avg = _.mean a
+	dev = _.stdDeviation a
+	for v in a when (Math.abs v - avg) > dev * m => v
+
+# [] -> []
+_.inStdDeviationBy = (f, a, m=1) ->
+	values = a |> _.map f
+	avg = _.mean values
+	dev = _.stdDeviation values
+	for v, k in a when (Math.abs values[k] - avg) > dev * m => v
+
 
 
 
