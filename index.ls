@@ -61,19 +61,19 @@ _.variance = ->
 	sum / it.length
 
 # [] -> Number
-_.stdDeviation = -> Math.sqrt _.variance it
+_.std-deviation = -> Math.sqrt _.variance it
 
 # [] -> []
-_.inStdDeviation = (a, m=1) ->
+_.in-std-deviation = (a, m=1) ->
 	avg = _.mean a
-	dev = _.stdDeviation a
+	dev = _.std-deviation a
 	for v in a when (Math.abs v - avg) > dev * m => v
 
 # [] -> []
-_.inStdDeviationBy = (f, a, m=1) ->
+_.in-std-deviation-by = (f, a, m=1) ->
 	values = a |> _.map f
 	avg = _.mean values
-	dev = _.stdDeviation values
+	dev = _.std-deviation values
 	for v, k in a when (Math.abs values[k] - avg) > dev * m => v
 
 
