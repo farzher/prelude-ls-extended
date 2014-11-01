@@ -5,10 +5,10 @@ _ = require 'prelude-ls'
 
 ## Regex
 
-# -> [str ...] or [empty]
+# -> [str*]
 _.regex-matches = (regex, str) -> str.match regex or []
 
-# -> if not key? => [[str ...]] else [str ...]
+# -> if not key? => [[str+]*] else [str*]
 _.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
 
 
@@ -39,38 +39,38 @@ _.shuffle = (arr) ->
 		x = arr[--i]
 		arr[i] = arr[j]
 		arr[j] = x
-	return arr
+	arr
 
-# -> []
-_.where = (query, list) ->
-	_.filter ->
-		for k, v of query => return false if it[k] isnt v
-		return true
-	, list
+# {}, [{}*] -> [{}*]
+_.where = (query, arr) ->
+	test = ->
+		for k, v of query when it[k] isnt v => return false
+		true
+	[a for a in arr when test a]
 
-# -> [[] ...] or [empty]
+# -> [[]*]
 _.batch = (count, list) ->
 	count = Number count; if count < 1 => return []
 	list = list.slice 0
-	return (while list.length => list.splice 0, count)
+	while list.length => list.splice 0, count
 
-# [] -> Number
+# [num] -> Number
 _.variance = ->
 	avg = _.mean it
 	sum = 0; for v in it => x = v - avg; sum += x*x;
 	sum / it.length
 
-# [] -> Number
+# [num] -> Number
 _.std-deviation = -> Math.sqrt _.variance it
 
-# [] -> []
-_.in-std-deviation = (a, m=1) ->
+# [num] -> [num*]
+_.outside-std-deviation = (a, m=1) ->
 	avg = _.mean a
 	dev = _.std-deviation a
 	for v in a when (Math.abs v - avg) > dev * m => v
 
-# [] -> []
-_.in-std-deviation-by = (f, a, m=1) ->
+# [mixed] -> [mixed*]
+_.outside-std-deviation-by = (f, a, m=1) ->
 	values = a |> _.map f
 	avg = _.mean values
 	dev = _.std-deviation values
@@ -94,13 +94,15 @@ _.in-std-deviation-by = (f, a, m=1) ->
 
 ## List & Obj
 
-# -> int
+# -> int or str
 _.index-by = (f, item) ->
-	if _.is-type 'Object', item
+	if typeof! item is 'Object'
 		list = _.values item
-		index = _.elem-index (f list), list
-		return (_.keys item)[index]
-	else return _.elem-index (f item), item
+		target = f list
+		for k, v of item when v is target => return k
+	else
+		target = f item
+		for v, k in item when v is target => return k
 
 
 
@@ -110,7 +112,7 @@ _.index-by = (f, item) ->
 # -> int
 _.rand = (min, max=null) ->
 	[min, max] = [0, min] if not max?
-	return Math.floor (Math.random! * (max - min + 1) + min)
+	Math.floor (Math.random! * (max - min + 1) + min)
 
 # -> bool
 _.chance = (num=0.5) -> Math.random! < num
@@ -137,8 +139,20 @@ _.ord = (str) -> str.char-code-at 0
 # -> bool
 _.is-insensitive = (a, b) -> a.to-upper-case! is b.to-upper-case!
 
+# -> bool
+_.in-insensitive = (a, arr) ->
+	a = a.to-upper-case!
+	for v in arr => return true if v.to-upper-case! is a
+	false
+
+# -> bool
+_.compare-array = (a, b) ->
+	return false if a.length isnt b.length
+	for , k in a => return false if a[k] isnt b[k]
+	true
+
 # -> str
-_.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
+_.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 
 
 
@@ -149,7 +163,7 @@ _.capitalize = (str) -> (str.substr 0, 1 .toUpperCase!) + str.substr 1
 ## Util
 
 # -> bool
-_.is-array = _.is-type 'Array'
+_.is-array = -> typeof! it is 'Array'
 
 # -> int
 _.bool-to-int = (b) -> if b then 1 else 0

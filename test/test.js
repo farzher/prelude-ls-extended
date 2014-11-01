@@ -36,6 +36,19 @@ exports.clone = function(it){
   it.strictEqual(b[0], temp, 'Changing original array should not affect cloned');
   return it.done();
 };
+exports.get2D = function(it){
+  var temp;
+  temp = _.get2D(21, 10);
+  it.strictEqual(temp[0], 1);
+  it.strictEqual(temp[1], 2);
+  return it.done();
+};
+exports.get1D = function(it){
+  var temp;
+  temp = _.get1D(1, 2, 10);
+  it.strictEqual(temp, 21);
+  return it.done();
+};
 exports.shuffle = function(it){
   var arr, shuffled, i$, len$, v, index;
   arr = [1, 2, 3, 'a', 'b', 'c'];
@@ -44,21 +57,9 @@ exports.shuffle = function(it){
   for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
     v = arr[i$];
     index = _.elemIndex(v, shuffled);
-    it.ok(index != null, 'Every element in the original array should be in the shuffled array');
+    it.strictEqual(index != null, true, 'Every element in the original array should be in the shuffled array');
   }
   it.strictEqual(_.shuffle([]).length, 0, 'Shuffling an empty array should not cause a problem');
-  return it.done();
-};
-exports.indexBy = function(it){
-  var list, obj;
-  list = [1, 9, 3];
-  it.strictEqual(_.indexBy(_.maximum, list), 1, 'Index of highest number is 1');
-  obj = {
-    butts: 1,
-    cats: 9,
-    rocks: 3
-  };
-  it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
   return it.done();
 };
 exports.where = function(it){
@@ -107,5 +108,105 @@ exports.batch = function(it){
   it.strictEqual(_.batch(1, list).length, list.length);
   it.strictEqual(_.batch(list.length, list).length, 1);
   it.strictEqual(_.batch('-1', list).length, 0, 'Batching by a broken amount should return []');
+  return it.done();
+};
+exports.variance = function(it){
+  it.strictEqual(_.variance([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), 10);
+  return it.done();
+};
+exports.stdDeviation = function(it){
+  it.strictEqual(+_.stdDeviation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]).toFixed(2), 3.16);
+  return it.done();
+};
+exports.outsideStdDeviation = function(it){
+  it.strictEqual(_.compareArray(_.outsideStdDeviation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), [1, 2, 10, 11]), true);
+  return it.done();
+};
+exports.outsideStdDeviationBy = function(it){
+  var stuff, res$, i$, i, outside;
+  res$ = [];
+  for (i$ = 1; i$ <= 11; ++i$) {
+    i = i$;
+    res$.push({
+      score: i,
+      name: "Item: " + i
+    });
+  }
+  stuff = res$;
+  outside = [stuff[0], stuff[1], stuff[9], stuff[10]];
+  it.strictEqual(_.compareArray(_.outsideStdDeviationBy(function(it){
+    return it.score;
+  }, stuff), outside), true);
+  return it.done();
+};
+exports.indexBy = function(it){
+  var list, obj;
+  list = [1, 9, 3];
+  it.strictEqual(_.indexBy(_.maximum, list), 1, 'Index of highest number is 1');
+  obj = {
+    butts: 1,
+    cats: 9,
+    rocks: 3
+  };
+  it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
+  return it.done();
+};
+exports.rand = function(it){
+  var ref$;
+  it.strictEqual((ref$ = _.rand(0, 1)) === 1 || ref$ === 0, true);
+  it.strictEqual((ref$ = _.rand(1)) === 1 || ref$ === 0, true);
+  return it.done();
+};
+exports.chance = function(it){
+  it.strictEqual(_.chance(0), false);
+  it.strictEqual(_.chance(1), true);
+  return it.done();
+};
+exports.negateIf = function(it){
+  it.strictEqual(_.negateIf(true, 5), -5);
+  it.strictEqual(_.negateIf(false, 5), 5);
+  return it.done();
+};
+exports.chr = function(it){
+  it.strictEqual(_.chr(97), 'a');
+  return it.done();
+};
+exports.ord = function(it){
+  it.strictEqual(_.ord('a'), 97);
+  return it.done();
+};
+exports.isInsensitive = function(it){
+  it.strictEqual(_.isInsensitive('sOmEtHiNg', 'something'), true);
+  it.strictEqual(_.isInsensitive('sOmEtHiNg else', 'something'), false);
+  return it.done();
+};
+exports.inInsensitive = function(it){
+  it.strictEqual(_.inInsensitive('lEeT', ['fish', 'CATS', 'LEET']), true);
+  it.strictEqual(_.inInsensitive('lEeTs', ['fish', 'CATS', 'LEET']), false);
+  return it.done();
+};
+exports.compareArray = function(it){
+  var temp;
+  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
+  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
+  it.strictEqual(_.compareArray([40], [40, 10]), false, 'Different size arrays should be different');
+  temp = {};
+  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
+  return it.done();
+};
+exports.capitalize = function(it){
+  it.strictEqual(_.capitalize('cats'), 'Cats');
+  return it.done();
+};
+exports.isArray = function(it){
+  it.strictEqual(_.isArray([]), true);
+  it.strictEqual(_.isArray({}), false);
+  return it.done();
+};
+exports.boolToInt = function(it){
+  it.strictEqual(_.boolToInt(true), 1);
+  it.strictEqual(_.boolToInt(false), 0);
+  it.strictEqual(_.boolToInt(5), 1);
+  it.strictEqual(_.boolToInt(0), 0);
   return it.done();
 };
