@@ -137,10 +137,13 @@ _.chr = (int) -> String.from-char-code int
 _.ord = (str) -> str.char-code-at 0
 
 # -> bool
-_.is-insensitive = (a, b) -> a.to-upper-case! is b.to-upper-case!
+_.is-insensitive = (a, b) ->
+	return false if typeof! a isnt 'String' or typeof! b isnt 'String'
+	a.to-upper-case! is b.to-upper-case!
 
 # -> bool
 _.in-insensitive = (a, arr) ->
+	return false if typeof! a isnt 'String'
 	a = a.to-upper-case!
 	for v in arr => return true if v.to-upper-case! is a
 	false

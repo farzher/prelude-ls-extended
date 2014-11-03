@@ -159,10 +159,16 @@ _.ord = function(str){
   return str.charCodeAt(0);
 };
 _.isInsensitive = function(a, b){
+  if (toString$.call(a).slice(8, -1) !== 'String' || toString$.call(b).slice(8, -1) !== 'String') {
+    return false;
+  }
   return a.toUpperCase() === b.toUpperCase();
 };
 _.inInsensitive = function(a, arr){
   var i$, len$, v;
+  if (toString$.call(a).slice(8, -1) !== 'String') {
+    return false;
+  }
   a = a.toUpperCase();
   for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
     v = arr[i$];
