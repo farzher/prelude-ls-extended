@@ -208,7 +208,7 @@ _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
 _.flipReject = _.flip(_.reject);
 _.flipFilter = _.flip(_.filter);
-_.flipSetTimeout = _.flip(_.setTimeout);
+_.flipSetTimeout = _.flip(setTimeout);
 _.regexMatch = function(regex, str){
   return str.match(regex) || [];
 };

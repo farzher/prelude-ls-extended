@@ -178,7 +178,7 @@ _.flip-each = _.flip _.each
 _.flip-map = _.flip _.map
 _.flip-reject = _.flip _.reject
 _.flip-filter = _.flip _.filter
-_.flip-set-timeout = _.flip _.set-timeout
+_.flip-set-timeout = _.flip set-timeout
 
 # Depreciated
 _.regex-match = (regex, str) -> str.match regex or []
