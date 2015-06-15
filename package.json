@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodeunit",
     "cover": "istanbul cover ./node_modules/nodeunit/bin/nodeunit && cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
-    "build": "browserify index.js -o browser.js -s prelude-ls-extended && uglifyjs browser.js -m -c -o browser.min.js && rm browser.js"
+    "build": "browserify index.js -o browser.js -s _ && uglifyjs browser.js -m -c -o browser.min.js && rm browser.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "nodeunit": "^0.9.0",
-    "browserify": "^4.1.4",
+    "browserify": "*",
     "uglify-js": "^2.4.13",
     "coveralls": "~2.10.0",
     "istanbul": "~0.2.10"

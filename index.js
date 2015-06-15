@@ -16,6 +16,7 @@ _.regexExec = function(regex, str, key){
   }
   return results$;
 };
+_.a = function(){"use strict";for(var r=0|arguments.length,t=Array(r),n=0;r>n;n++)t[n]=arguments[n];return t}
 _.clone = function(it){
   return it.slice(0);
 };
@@ -111,6 +112,77 @@ _.outsideStdDeviationBy = function(f, a, m){
   }
   return results$;
 };
+_.rand = function(min, max){
+  var ref$;
+  max == null && (max = null);
+  if (max == null) {
+    ref$ = [0, min], min = ref$[0], max = ref$[1];
+  }
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+_.chance = function(num){
+  num == null && (num = 0.5);
+  return Math.random() < num;
+};
+_.negateIf = function(b, x){
+  if (b) {
+    return -x;
+  } else {
+    return x;
+  }
+};
+_.randFloat = function(min, max){
+  return Math.random() * max + min;
+};
+_.randWeight = function(arr, invert){
+  var max, min, i$, len$, ref$, weight, maxPlusMin, res$, a, total, rand, current, value;
+  invert == null && (invert = false);
+  if (invert) {
+    max = -Infinity;
+    min = Infinity;
+    for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
+      ref$ = arr[i$], weight = ref$[1];
+      if (weight < min) {
+        min = weight;
+      }
+      if (weight > max) {
+        max = weight;
+      }
+    }
+    maxPlusMin = max + min;
+    res$ = [];
+    for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
+      a = arr[i$];
+      res$.push([a[0], maxPlusMin - a[1]]);
+    }
+    arr = res$;
+  }
+  total = 0;
+  for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
+    ref$ = arr[i$], weight = ref$[1];
+    total += weight;
+  }
+  rand = Math.random() * total;
+  current = 0;
+  for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
+    ref$ = arr[i$], value = ref$[0], weight = ref$[1];
+    current += weight;
+    if (rand <= current) {
+      return value;
+    }
+  }
+};
+_.mapNumber = function(a1, a2, b1, b2, v, exponent){
+  var aDist, bDist, ratio;
+  exponent == null && (exponent = null);
+  aDist = a2 - a1;
+  bDist = b2 - b1;
+  ratio = (v - a1) / aDist;
+  if (exponent) {
+    ratio = Math.pow(ratio, exponent);
+  }
+  return bDist * ratio + b1;
+};
 _.indexBy = function(f, item){
   var list, target, k, v, i$, len$;
   if (toString$.call(item).slice(8, -1) === 'Object') {
@@ -133,24 +205,18 @@ _.indexBy = function(f, item){
     }
   }
 };
-_.rand = function(min, max){
-  var ref$;
-  max == null && (max = null);
-  if (max == null) {
-    ref$ = [0, min], min = ref$[0], max = ref$[1];
+_.compareArray = function(a, b){
+  var i$, len$, k;
+  if (a.length !== b.length) {
+    return false;
   }
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-_.chance = function(num){
-  num == null && (num = 0.5);
-  return Math.random() < num;
-};
-_.negateIf = function(b, x){
-  if (b) {
-    return -x;
-  } else {
-    return x;
+  for (i$ = 0, len$ = a.length; i$ < len$; ++i$) {
+    k = i$;
+    if (a[k] !== b[k]) {
+      return false;
+    }
   }
+  return true;
 };
 _.chr = function(int){
   return String.fromCharCode(int);
@@ -177,19 +243,6 @@ _.inInsensitive = function(a, arr){
     }
   }
   return false;
-};
-_.compareArray = function(a, b){
-  var i$, len$, k;
-  if (a.length !== b.length) {
-    return false;
-  }
-  for (i$ = 0, len$ = a.length; i$ < len$; ++i$) {
-    k = i$;
-    if (a[k] !== b[k]) {
-      return false;
-    }
-  }
-  return true;
 };
 _.capitalize = function(str){
   return str.substr(0, 1).toUpperCase() + str.substr(1);
