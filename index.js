@@ -112,14 +112,6 @@ _.outsideStdDeviationBy = function(f, a, m){
   }
   return results$;
 };
-_.rand = function(min, max){
-  var ref$;
-  max == null && (max = null);
-  if (max == null) {
-    ref$ = [0, min], min = ref$[0], max = ref$[1];
-  }
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
 _.chance = function(num){
   num == null && (num = 0.5);
   return Math.random() < num;
@@ -131,13 +123,23 @@ _.negateIf = function(b, x){
     return x;
   }
 };
-_.randFloat = function(min, max){
-  return Math.random() * max + min;
+_.flipIf = function(b, v){
+  if (b) {
+    return !v;
+  } else {
+    return v;
+  }
 };
-_.randWeight = function(arr, invert){
+_.rand = function(min, max){
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+_.randFloat = function(min, max){
+  return Math.random() * (max - min) + min;
+};
+_.randWeight = function(arr, o){
   var max, min, i$, len$, ref$, weight, maxPlusMin, res$, a, total, rand, current, value;
-  invert == null && (invert = false);
-  if (invert) {
+  o == null && (o = null);
+  if (o != null && o.invert) {
     max = -Infinity;
     min = Infinity;
     for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
@@ -172,16 +174,16 @@ _.randWeight = function(arr, invert){
     }
   }
 };
-_.mapNumber = function(a1, a2, b1, b2, v, exponent){
+_.mapNumber = function(value, from1, from2, to1, to2, o){
   var aDist, bDist, ratio;
-  exponent == null && (exponent = null);
-  aDist = a2 - a1;
-  bDist = b2 - b1;
-  ratio = (v - a1) / aDist;
-  if (exponent) {
-    ratio = Math.pow(ratio, exponent);
+  o == null && (o = null);
+  aDist = from2 - from1;
+  bDist = to2 - to1;
+  ratio = (value - from1) / aDist;
+  if (o != null && o.exponent) {
+    ratio = Math.pow(ratio, o.exponent);
   }
-  return bDist * ratio + b1;
+  return bDist * ratio + to1;
 };
 _.indexBy = function(f, item){
   var list, target, k, v, i$, len$;
@@ -205,14 +207,14 @@ _.indexBy = function(f, item){
     }
   }
 };
-_.compareArray = function(a, b){
+_.compareArray = function(arr1, arr2){
   var i$, len$, k;
-  if (a.length !== b.length) {
+  if (arr1.length !== arr2.length) {
     return false;
   }
-  for (i$ = 0, len$ = a.length; i$ < len$; ++i$) {
+  for (i$ = 0, len$ = arr1.length; i$ < len$; ++i$) {
     k = i$;
-    if (a[k] !== b[k]) {
+    if (arr1[k] !== arr2[k]) {
       return false;
     }
   }
@@ -224,21 +226,21 @@ _.chr = function(int){
 _.ord = function(str){
   return str.charCodeAt(0);
 };
-_.isInsensitive = function(a, b){
-  if (toString$.call(a).slice(8, -1) !== 'String' || toString$.call(b).slice(8, -1) !== 'String') {
+_.isInsensitive = function(str1, str2){
+  if (toString$.call(str1).slice(8, -1) !== 'String' || toString$.call(str2).slice(8, -1) !== 'String') {
     return false;
   }
-  return a.toUpperCase() === b.toUpperCase();
+  return str1.toUpperCase() === str2.toUpperCase();
 };
-_.inInsensitive = function(a, arr){
+_.inInsensitive = function(str, arr){
   var i$, len$, v;
-  if (toString$.call(a).slice(8, -1) !== 'String') {
+  if (toString$.call(str).slice(8, -1) !== 'String') {
     return false;
   }
-  a = a.toUpperCase();
+  str = str.toUpperCase();
   for (i$ = 0, len$ = arr.length; i$ < len$; ++i$) {
     v = arr[i$];
-    if (v.toUpperCase() === a) {
+    if (v.toUpperCase() === str) {
       return true;
     }
   }
@@ -250,8 +252,8 @@ _.capitalize = function(str){
 _.isArray = function(it){
   return toString$.call(it).slice(8, -1) === 'Array';
 };
-_.boolToInt = function(b){
-  if (b) {
+_.toInt = function(it){
+  if (it) {
     return 1;
   } else {
     return 0;
@@ -262,7 +264,4 @@ _.flipMap = _.flip(_.map);
 _.flipReject = _.flip(_.reject);
 _.flipFilter = _.flip(_.filter);
 _.flipSetTimeout = _.flip(setTimeout);
-_.regexMatch = function(regex, str){
-  return str.match(regex) || [];
-};
 module.exports = _;

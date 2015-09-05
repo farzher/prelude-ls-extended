@@ -51,21 +51,24 @@ _.where = (query, arr) ->
     true
   [a for a in arr when test a]
 
-## Math
-
 # -> [[]*]
 _.batch = (count, list) ->
   count = Number count; if count < 1 => return []
   list = list.slice 0
   while list.length => list.splice 0, count
 
-# [num] -> Number
+
+
+
+## Math
+
+# [num] -> num
 _.variance = ->
   avg = _.mean it
   sum = 0; for v in it => x = v - avg; sum += x*x;
   sum / it.length
 
-# [num] -> Number
+# [num] -> num
 _.std-deviation = -> Math.sqrt _.variance it
 
 # [num] -> [num*]
@@ -74,17 +77,12 @@ _.outside-std-deviation = (a, m=1) ->
   dev = _.std-deviation a
   for v in a when (Math.abs v - avg) > dev * m => v
 
-# [mixed] -> [mixed*]
+# func, [mixed] -> [mixed*]
 _.outside-std-deviation-by = (f, a, m=1) ->
   values = a |> _.map f
   avg = _.mean values
   dev = _.std-deviation values
   for v, k in a when (Math.abs values[k] - avg) > dev * m => v
-
-# -> int
-_.rand = (min, max=null) ->
-  [min, max] = [0, min] if not max?
-  Math.floor (Math.random! * (max - min + 1) + min)
 
 # -> bool
 _.chance = (num=0.5) -> Math.random! < num
@@ -92,12 +90,18 @@ _.chance = (num=0.5) -> Math.random! < num
 # -> num
 _.negate-if = (b, x) -> if b then -x else x
 
-# -> num
-_.rand-float = (min, max) -> Math.random!*max + min
+# -> bool
+_.flip-if = (b, v) -> if b then not v else v
 
-# -> mixed
-_.rand-weight = (arr, invert=false) ->
-  if invert
+# -> int
+_.rand = (min, max) -> Math.floor (Math.random! * (max - min + 1) + min)
+
+# -> num
+_.rand-float = (min, max) -> Math.random! * (max - min) + min
+
+# [[item:mixed, weight:num]*] -> mixed
+_.rand-weight = (arr, o=null) ->
+  if o?invert
     max = -Infinity
     min = Infinity
     for [, weight] in arr
@@ -115,12 +119,12 @@ _.rand-weight = (arr, invert=false) ->
     return value if rand <= current
 
 # -> num
-_.map-number = (a1, a2, b1, b2, v, exponent=null) ->
-  a-dist = a2 - a1
-  b-dist = b2 - b1
-  ratio = (v - a1) / a-dist
-  if exponent => ratio = ratio ^ exponent
-  b-dist * ratio + b1
+_.map-number = (value, from1, from2, to1, to2, o=null) ->
+  a-dist = from2 - from1
+  b-dist = to2 - to1
+  ratio = (value - from1) / a-dist
+  if o?exponent => ratio = ratio ^ o.exponent
+  b-dist * ratio + to1
 
 
 
@@ -148,9 +152,9 @@ _.index-by = (f, item) ->
     for v, k in item when v is target => return k
 
 # -> bool
-_.compare-array = (a, b) ->
-  return false if a.length isnt b.length
-  for , k in a => return false if a[k] isnt b[k]
+_.compare-array = (arr1, arr2) ->
+  return false if arr1.length isnt arr2.length
+  for , k in arr1 => return false if arr1[k] isnt arr2[k]
   true
 
 
@@ -169,15 +173,15 @@ _.chr = (int) -> String.from-char-code int
 _.ord = (str) -> str.char-code-at 0
 
 # -> bool
-_.is-insensitive = (a, b) ->
-  return false if typeof! a isnt 'String' or typeof! b isnt 'String'
-  a.to-upper-case! is b.to-upper-case!
+_.is-insensitive = (str1, str2) ->
+  return false if typeof! str1 isnt 'String' or typeof! str2 isnt 'String'
+  str1.to-upper-case! is str2.to-upper-case!
 
 # -> bool
-_.in-insensitive = (a, arr) ->
-  return false if typeof! a isnt 'String'
-  a = a.to-upper-case!
-  for v in arr => return true if v.to-upper-case! is a
+_.in-insensitive = (str, arr) ->
+  return false if typeof! str isnt 'String'
+  str = str.to-upper-case!
+  for v in arr => return true if v.to-upper-case! is str
   false
 
 # -> str
@@ -194,8 +198,8 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 # -> bool
 _.is-array = -> typeof! it is 'Array'
 
-# -> int
-_.bool-to-int = (b) -> if b then 1 else 0
+# mixed -> int
+_.to-int = -> if it then 1 else 0
 
 
 
@@ -205,8 +209,5 @@ _.flip-map = _.flip _.map
 _.flip-reject = _.flip _.reject
 _.flip-filter = _.flip _.filter
 _.flip-set-timeout = _.flip set-timeout
-
-# Depreciated
-_.regex-match = (regex, str) -> str.match regex or []
 
 module.exports = _

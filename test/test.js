@@ -16,6 +16,14 @@ exports.regexExec = function(it){
   it.strictEqual(temp[0], 'something.com');
   return it.done();
 };
+exports.a = function(it){
+  var tmp;
+  it.deepEqual(_.a(_.a('div#header', _.a(_.a('img', 'logo.png'), _.a('h1', 'hello world'))), _.a('div#footer', 'goodbye world')), [['div#header', [['img', 'logo.png'], ['h1', 'hello world']]], ['div#footer', 'goodbye world']]);
+  tmp = _.a(1);
+  it.deepEqual(tmp, [1]);
+  it.deepEqual(_.a(1, 2, 3), [1, 2, 3]);
+  return it.done();
+};
 exports.clone = function(it){
   var a, b, i$, to$, i, temp;
   a = [
@@ -29,10 +37,10 @@ exports.clone = function(it){
     it.strictEqual(a[i], b[i], 'Every element in each array should be the same');
   }
   temp = a[0];
-  b[0] = 'x';
+  b[0] = 'new';
   it.strictEqual(a[0], temp, 'Changing cloned array should not affect original');
   temp = b[0];
-  a[0] = 'z';
+  a[0] = 'new';
   it.strictEqual(b[0], temp, 'Changing original array should not affect cloned');
   return it.done();
 };
@@ -119,7 +127,7 @@ exports.stdDeviation = function(it){
   return it.done();
 };
 exports.outsideStdDeviation = function(it){
-  it.strictEqual(_.compareArray(_.outsideStdDeviation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), [1, 2, 10, 11]), true);
+  it.deepEqual(_.outsideStdDeviation([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), [1, 2, 10, 11], true);
   return it.done();
 };
 exports.outsideStdDeviationBy = function(it){
@@ -134,9 +142,57 @@ exports.outsideStdDeviationBy = function(it){
   }
   stuff = res$;
   outside = [stuff[0], stuff[1], stuff[9], stuff[10]];
-  it.strictEqual(_.compareArray(_.outsideStdDeviationBy(function(it){
+  it.deepEqual(_.outsideStdDeviationBy(function(it){
     return it.score;
-  }, stuff), outside), true);
+  }, stuff), outside, true);
+  return it.done();
+};
+exports.chance = function(it){
+  it.strictEqual(_.chance(0), false);
+  it.strictEqual(_.chance(1), true);
+  return it.done();
+};
+exports.negateIf = function(it){
+  it.strictEqual(_.negateIf(true, 5), -5);
+  it.strictEqual(_.negateIf(false, 5), 5);
+  return it.done();
+};
+exports.flipIf = function(it){
+  it.strictEqual(_.flipIf(true, true), false);
+  it.strictEqual(_.flipIf(false, false), false);
+  it.strictEqual(_.flipIf(5, 5), false);
+  it.strictEqual(_.flipIf(true, 0), true);
+  return it.done();
+};
+exports.rand = function(it){
+  var ref$;
+  it.strictEqual((ref$ = _.rand(0, 1)) === 1 || ref$ === 0, true);
+  it.strictEqual((ref$ = _.rand(1, 2)) === 1 || ref$ === 2, true);
+  return it.done();
+};
+exports.randFloat = function(it){
+  var tmp;
+  tmp = _.randFloat(0, 1);
+  it.strictEqual(tmp >= 0 && tmp <= 1, true);
+  tmp = _.randFloat(1, 2);
+  it.strictEqual(tmp >= 1 && tmp <= 2, true);
+  return it.done();
+};
+exports.randWeight = function(it){
+  var stuff;
+  stuff = [['heavy', 1000000000], ['light', 1]];
+  it.strictEqual(_.randWeight(stuff), 'heavy');
+  it.strictEqual(_.randWeight(stuff, {
+    invert: true
+  }), 'light');
+  return it.done();
+};
+exports.mapNumber = function(it){
+  it.strictEqual(_.mapNumber(0.5, 0, 1, 0, 100), 50);
+  it.strictEqual(_.mapNumber(0.5, 0, 1, 0, 100, {
+    exponent: 2
+  }), 25);
+  it.strictEqual(_.mapNumber(0, 0, 1, 100, 0), 100);
   return it.done();
 };
 exports.indexBy = function(it){
@@ -151,20 +207,13 @@ exports.indexBy = function(it){
   it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
   return it.done();
 };
-exports.rand = function(it){
-  var ref$;
-  it.strictEqual((ref$ = _.rand(0, 1)) === 1 || ref$ === 0, true);
-  it.strictEqual((ref$ = _.rand(1)) === 1 || ref$ === 0, true);
-  return it.done();
-};
-exports.chance = function(it){
-  it.strictEqual(_.chance(0), false);
-  it.strictEqual(_.chance(1), true);
-  return it.done();
-};
-exports.negateIf = function(it){
-  it.strictEqual(_.negateIf(true, 5), -5);
-  it.strictEqual(_.negateIf(false, 5), 5);
+exports.compareArray = function(it){
+  var temp;
+  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
+  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
+  it.strictEqual(_.compareArray([1], [1, 1]), false, 'Different size arrays should be different');
+  temp = {};
+  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
   return it.done();
 };
 exports.chr = function(it){
@@ -185,15 +234,6 @@ exports.inInsensitive = function(it){
   it.strictEqual(_.inInsensitive('lEeTs', ['fish', 'CATS', 'LEET']), false);
   return it.done();
 };
-exports.compareArray = function(it){
-  var temp;
-  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
-  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
-  it.strictEqual(_.compareArray([40], [40, 10]), false, 'Different size arrays should be different');
-  temp = {};
-  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
-  return it.done();
-};
 exports.capitalize = function(it){
   it.strictEqual(_.capitalize('cats'), 'Cats');
   return it.done();
@@ -203,10 +243,10 @@ exports.isArray = function(it){
   it.strictEqual(_.isArray({}), false);
   return it.done();
 };
-exports.boolToInt = function(it){
-  it.strictEqual(_.boolToInt(true), 1);
-  it.strictEqual(_.boolToInt(false), 0);
-  it.strictEqual(_.boolToInt(5), 1);
-  it.strictEqual(_.boolToInt(0), 0);
+exports.toInt = function(it){
+  it.strictEqual(_.toInt(true), 1);
+  it.strictEqual(_.toInt(false), 0);
+  it.strictEqual(_.toInt(5), 1);
+  it.strictEqual(_.toInt(0), 0);
   return it.done();
 };
