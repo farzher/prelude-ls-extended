@@ -227,11 +227,13 @@ exports.ord = function(it){
 exports.isInsensitive = function(it){
   it.strictEqual(_.isInsensitive('sOmEtHiNg', 'something'), true);
   it.strictEqual(_.isInsensitive('sOmEtHiNg else', 'something'), false);
+  it.strictEqual(_.isInsensitive(['not a string'], 'something'), false);
   return it.done();
 };
 exports.inInsensitive = function(it){
   it.strictEqual(_.inInsensitive('lEeT', ['fish', 'CATS', 'LEET']), true);
   it.strictEqual(_.inInsensitive('lEeTs', ['fish', 'CATS', 'LEET']), false);
+  it.strictEqual(_.inInsensitive(['not a string'], ['fish', 'CATS', 'LEET']), false);
   return it.done();
 };
 exports.capitalize = function(it){

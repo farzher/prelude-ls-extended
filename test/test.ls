@@ -153,10 +153,12 @@ exports import
 	is-insensitive: ->
 		it.strictEqual ('sOmEtHiNg' `_.is-insensitive` 'something'), true
 		it.strictEqual ('sOmEtHiNg else' `_.is-insensitive` 'something'), false
+		it.strictEqual (['not a string'] `_.is-insensitive` 'something'), false
 		it.done!
 	in-insensitive: ->
 		it.strictEqual ('lEeT' `_.in-insensitive` ['fish', 'CATS', 'LEET']), true
 		it.strictEqual ('lEeTs' `_.in-insensitive` ['fish', 'CATS', 'LEET']), false
+		it.strictEqual (['not a string'] `_.in-insensitive` ['fish', 'CATS', 'LEET']), false
 		it.done!
 	capitalize: ->
 		it.strictEqual (_.capitalize 'cats'), 'Cats'
