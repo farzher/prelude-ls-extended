@@ -83,6 +83,13 @@ exports import
 		it.strictEqual (_.batch list.length, list).length, 1
 		it.strictEqual (_.batch '-1', list).length, 0, 'Batching by a broken amount should return []'
 		it.done!
+	compare-array: ->
+		it.strictEqual (_.compare-array [1 2 3], [1 2 3]), true
+		it.strictEqual (_.compare-array [1 {} 3], [1 {} 3]), false, 'Different objects should be different'
+		it.strictEqual (_.compare-array [1], [1 1]), false, 'Different size arrays should be different'
+		temp = {}
+		it.strictEqual (_.compare-array [22, temp], [22, temp]), true, 'Same objects should be the same'
+		it.done!
 	variance: ->
 		it.strictEqual (_.variance [1 to 11]), 10
 		it.done!
@@ -111,6 +118,12 @@ exports import
 		it.strictEqual (_.flip-if 5, 5), false
 		it.strictEqual (_.flip-if true, 0), true
 		it.done!
+	to-bit: ->
+		it.strictEqual (_.to-bit true), 1
+		it.strictEqual (_.to-bit false), 0
+		it.strictEqual (_.to-bit 5), 1
+		it.strictEqual (_.to-bit 0), 0
+		it.done!
 	rand: ->
 		it.strictEqual ((_.rand 0, 1) in [1, 0]), true
 		it.strictEqual ((_.rand 1, 2) in [1, 2]), true
@@ -137,13 +150,6 @@ exports import
 		obj = {butts: 1, cats: 9, rocks: 3}
 		it.strictEqual (_.index-by _.minimum, obj), 'butts', 'Index of lowest number is butts'
 		it.done!
-	compare-array: ->
-		it.strictEqual (_.compare-array [1 2 3], [1 2 3]), true
-		it.strictEqual (_.compare-array [1 {} 3], [1 {} 3]), false, 'Different objects should be different'
-		it.strictEqual (_.compare-array [1], [1 1]), false, 'Different size arrays should be different'
-		temp = {}
-		it.strictEqual (_.compare-array [22, temp], [22, temp]), true, 'Same objects should be the same'
-		it.done!
 	chr: ->
 		it.strictEqual (_.chr 97), 'a'
 		it.done!
@@ -167,10 +173,3 @@ exports import
 		it.strictEqual (_.is-array []), true
 		it.strictEqual (_.is-array {}), false
 		it.done!
-	to-bit: ->
-		it.strictEqual (_.to-bit true), 1
-		it.strictEqual (_.to-bit false), 0
-		it.strictEqual (_.to-bit 5), 1
-		it.strictEqual (_.to-bit 0), 0
-		it.done!
-

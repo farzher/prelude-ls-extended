@@ -118,6 +118,15 @@ exports.batch = function(it){
   it.strictEqual(_.batch('-1', list).length, 0, 'Batching by a broken amount should return []');
   return it.done();
 };
+exports.compareArray = function(it){
+  var temp;
+  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
+  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
+  it.strictEqual(_.compareArray([1], [1, 1]), false, 'Different size arrays should be different');
+  temp = {};
+  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
+  return it.done();
+};
 exports.variance = function(it){
   it.strictEqual(_.variance([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]), 10);
   return it.done();
@@ -164,6 +173,13 @@ exports.flipIf = function(it){
   it.strictEqual(_.flipIf(true, 0), true);
   return it.done();
 };
+exports.toBit = function(it){
+  it.strictEqual(_.toBit(true), 1);
+  it.strictEqual(_.toBit(false), 0);
+  it.strictEqual(_.toBit(5), 1);
+  it.strictEqual(_.toBit(0), 0);
+  return it.done();
+};
 exports.rand = function(it){
   var ref$;
   it.strictEqual((ref$ = _.rand(0, 1)) === 1 || ref$ === 0, true);
@@ -207,15 +223,6 @@ exports.indexBy = function(it){
   it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
   return it.done();
 };
-exports.compareArray = function(it){
-  var temp;
-  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
-  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
-  it.strictEqual(_.compareArray([1], [1, 1]), false, 'Different size arrays should be different');
-  temp = {};
-  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
-  return it.done();
-};
 exports.chr = function(it){
   it.strictEqual(_.chr(97), 'a');
   return it.done();
@@ -243,12 +250,5 @@ exports.capitalize = function(it){
 exports.isArray = function(it){
   it.strictEqual(_.isArray([]), true);
   it.strictEqual(_.isArray({}), false);
-  return it.done();
-};
-exports.toBit = function(it){
-  it.strictEqual(_.toBit(true), 1);
-  it.strictEqual(_.toBit(false), 0);
-  it.strictEqual(_.toBit(5), 1);
-  it.strictEqual(_.toBit(0), 0);
   return it.done();
 };
