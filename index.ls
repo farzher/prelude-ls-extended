@@ -199,7 +199,7 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 _.is-array = -> typeof! it is 'Array'
 
 # mixed -> int
-_.to-int = -> if it then 1 else 0
+_.to-bit = -> if it then 1 else 0
 
 
 

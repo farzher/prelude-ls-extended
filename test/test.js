@@ -245,10 +245,10 @@ exports.isArray = function(it){
   it.strictEqual(_.isArray({}), false);
   return it.done();
 };
-exports.toInt = function(it){
-  it.strictEqual(_.toInt(true), 1);
-  it.strictEqual(_.toInt(false), 0);
-  it.strictEqual(_.toInt(5), 1);
-  it.strictEqual(_.toInt(0), 0);
+exports.toBit = function(it){
+  it.strictEqual(_.toBit(true), 1);
+  it.strictEqual(_.toBit(false), 0);
+  it.strictEqual(_.toBit(5), 1);
+  it.strictEqual(_.toBit(0), 0);
   return it.done();
 };

@@ -252,7 +252,7 @@ _.capitalize = function(str){
 _.isArray = function(it){
   return toString$.call(it).slice(8, -1) === 'Array';
 };
-_.toInt = function(it){
+_.toBit = function(it){
   if (it) {
     return 1;
   } else {

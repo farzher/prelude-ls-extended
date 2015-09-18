@@ -167,10 +167,10 @@ exports import
 		it.strictEqual (_.is-array []), true
 		it.strictEqual (_.is-array {}), false
 		it.done!
-	to-int: ->
-		it.strictEqual (_.to-int true), 1
-		it.strictEqual (_.to-int false), 0
-		it.strictEqual (_.to-int 5), 1
-		it.strictEqual (_.to-int 0), 0
+	to-bit: ->
+		it.strictEqual (_.to-bit true), 1
+		it.strictEqual (_.to-bit false), 0
+		it.strictEqual (_.to-bit 5), 1
+		it.strictEqual (_.to-bit 0), 0
 		it.done!
 
