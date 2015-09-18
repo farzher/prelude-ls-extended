@@ -107,7 +107,7 @@ _.rand = (min, max) -> Math.floor (Math.random! * (max - min + 1) + min)
 # -> num
 _.rand-float = (min, max) -> Math.random! * (max - min) + min
 
-# [[item:mixed, weight:num]*] -> mixed
+# [[item:mixed, weight:num]*] -> item
 _.rand-weight = (arr, o=null) ->
   if o?invert
     max = -Infinity
