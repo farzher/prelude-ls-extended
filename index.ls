@@ -98,6 +98,9 @@ _.negate-if = (b, x) -> if b then -x else x
 # -> bool
 _.flip-if = (b, v) -> if b then not v else v
 
+# mixed -> int
+_.to-bit = -> if it then 1 else 0
+
 # -> int
 _.rand = (min, max) -> Math.floor (Math.random! * (max - min + 1) + min)
 
@@ -197,10 +200,6 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 # -> bool
 _.is-array = -> typeof! it is 'Array'
 
-# mixed -> int
-_.to-bit = -> if it then 1 else 0
-
-
 
 
 _.flip-each = _.flip _.each
@@ -208,5 +207,7 @@ _.flip-map = _.flip _.map
 _.flip-reject = _.flip _.reject
 _.flip-filter = _.flip _.filter
 _.flip-set-timeout = _.flip set-timeout
+
+
 
 module.exports = _

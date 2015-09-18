@@ -143,6 +143,13 @@ _.flipIf = function(b, v){
     return v;
   }
 };
+_.toBit = function(it){
+  if (it) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 _.rand = function(min, max){
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -251,13 +258,6 @@ _.capitalize = function(str){
 };
 _.isArray = function(it){
   return toString$.call(it).slice(8, -1) === 'Array';
-};
-_.toBit = function(it){
-  if (it) {
-    return 1;
-  } else {
-    return 0;
-  }
 };
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
