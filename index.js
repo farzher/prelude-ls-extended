@@ -69,6 +69,19 @@ _.batch = function(count, list){
   }
   return results$;
 };
+_.compareArray = function(arr1, arr2){
+  var i$, len$, k;
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (i$ = 0, len$ = arr1.length; i$ < len$; ++i$) {
+    k = i$;
+    if (arr1[k] !== arr2[k]) {
+      return false;
+    }
+  }
+  return true;
+};
 _.variance = function(it){
   var avg, sum, i$, len$, v, x;
   avg = _.mean(it);
@@ -206,19 +219,6 @@ _.indexBy = function(f, item){
       }
     }
   }
-};
-_.compareArray = function(arr1, arr2){
-  var i$, len$, k;
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-  for (i$ = 0, len$ = arr1.length; i$ < len$; ++i$) {
-    k = i$;
-    if (arr1[k] !== arr2[k]) {
-      return false;
-    }
-  }
-  return true;
 };
 _.chr = function(int){
   return String.fromCharCode(int);

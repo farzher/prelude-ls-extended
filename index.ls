@@ -57,6 +57,11 @@ _.batch = (count, list) ->
   list = list.slice 0
   while list.length => list.splice 0, count
 
+# -> bool
+_.compare-array = (arr1, arr2) ->
+  return false if arr1.length isnt arr2.length
+  for , k in arr1 => return false if arr1[k] isnt arr2[k]
+  true
 
 
 
@@ -150,12 +155,6 @@ _.index-by = (f, item) ->
   else
     target = f item
     for v, k in item when v is target => return k
-
-# -> bool
-_.compare-array = (arr1, arr2) ->
-  return false if arr1.length isnt arr2.length
-  for , k in arr1 => return false if arr1[k] isnt arr2[k]
-  true
 
 
 
