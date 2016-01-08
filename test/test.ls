@@ -142,6 +142,8 @@ exports import
 	map-number: ->
 		it.strictEqual (_.map-number 0.5, 0, 1, 0, 100), 50
 		it.strictEqual (_.map-number 0.5, 0, 1, 0, 100, {exponent:2}), 25
+		it.strictEqual (_.map-number -0.5, 0, 1, 0, 100, {exponent:2}), -25
+		it.strictEqual (_.map-number -0.5, 0, 1, 0, 1, {exponent:2.1}), -(0.5^2.1)
 		it.strictEqual (_.map-number 0, 0, 1, 100, 0), 100
 		it.done!
 	index-by: ->

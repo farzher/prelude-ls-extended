@@ -208,6 +208,12 @@ exports.mapNumber = function(it){
   it.strictEqual(_.mapNumber(0.5, 0, 1, 0, 100, {
     exponent: 2
   }), 25);
+  it.strictEqual(_.mapNumber(-0.5, 0, 1, 0, 100, {
+    exponent: 2
+  }), -25);
+  it.strictEqual(_.mapNumber(-0.5, 0, 1, 0, 1, {
+    exponent: 2.1
+  }), -Math.pow(0.5, 2.1));
   it.strictEqual(_.mapNumber(0, 0, 1, 100, 0), 100);
   return it.done();
 };

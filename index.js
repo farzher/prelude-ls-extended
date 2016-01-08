@@ -4,12 +4,12 @@ _ = require('prelude-ls');
 _.regexMatches = function(regex, str){
   return str.match(regex) || [];
 };
-_.regexExec = function(regex, str, key){
+_.regexExec = function(regex, str, group){
   var tmp, results$ = [];
-  key == null && (key = null);
+  group == null && (group = null);
   while (tmp = regex.exec(str)) {
-    if (key != null) {
-      results$.push(tmp[key]);
+    if (group != null) {
+      results$.push(tmp[group]);
     } else {
       results$.push(tmp);
     }
@@ -195,13 +195,17 @@ _.randWeight = function(arr, o){
   }
 };
 _.mapNumber = function(value, from1, from2, to1, to2, o){
-  var aDist, bDist, ratio;
+  var aDist, bDist, ratio, isNegative;
   o == null && (o = null);
   aDist = from2 - from1;
   bDist = to2 - to1;
   ratio = (value - from1) / aDist;
   if (o != null && o.exponent) {
-    ratio = Math.pow(ratio, o.exponent);
+    isNegative = ratio < 0;
+    ratio = Math.pow(Math.abs(ratio), o.exponent);
+    if (isNegative) {
+      ratio = -ratio;
+    }
   }
   return bDist * ratio + to1;
 };

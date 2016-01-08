@@ -5,11 +5,11 @@ _ = require 'prelude-ls'
 
 ## Regex
 
-# -> [str*]
+# -> if /g => [matching-str*] else [(matching-str, group1, group2, ...)?]
 _.regex-matches = (regex, str) -> str.match regex or []
 
-# -> if not key? => [[str+]*] else [str*]
-_.regex-exec = (regex, str, key=null) -> while tmp = regex.exec str => if key? then tmp[key] else tmp
+# -> if not group? => [[matching-str, group1, group2, ...]*] else [str*]
+_.regex-exec = (regex, str, group=null) -> while tmp = regex.exec str => if group? then tmp[group] else tmp
 
 
 
@@ -131,10 +131,11 @@ _.map-number = (value, from1, from2, to1, to2, o=null) ->
   a-dist = from2 - from1
   b-dist = to2 - to1
   ratio = (value - from1) / a-dist
-  if o?exponent => ratio = ratio ^ o.exponent
+  if o?exponent
+    is-negative = ratio < 0
+    ratio = (Math.abs ratio) ^ o.exponent
+    if is-negative => ratio = -ratio
   b-dist * ratio + to1
-
-
 
 ## Obj
 
