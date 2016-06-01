@@ -217,6 +217,46 @@ exports.mapNumber = function(it){
   it.strictEqual(_.mapNumber(0, 0, 1, 100, 0), 100);
   return it.done();
 };
+exports.isNumeric = function(it){
+  it.strictEqual(_.isNumeric(1), true);
+  it.strictEqual(_.isNumeric('50.34'), true);
+  it.strictEqual(_.isNumeric('50.34b'), false);
+  it.strictEqual(_.isNumeric('0x50.34'), false);
+  it.strictEqual(_.isNumeric('0x50.34'), false);
+  it.strictEqual(_.isNumeric({}), false);
+  it.strictEqual(_.isNumeric('-23.23'), true);
+  it.strictEqual(_.isNumeric('-23.23.23'), false);
+  return it.done();
+};
+exports['import'] = function(it){
+  var a, b;
+  a = {
+    a: 1
+  };
+  b = {
+    b: 2
+  };
+  _['import'](b, a, {
+    a: 2
+  });
+  it.strictEqual(b.a, 2);
+  return it.done();
+};
+exports.newObject = function(it){
+  var a, b, c;
+  a = {
+    a: 1
+  };
+  b = {
+    b: 2
+  };
+  c = _.newObject(a, {
+    a: 2
+  });
+  it.strictEqual(c.a, 2);
+  it.strictEqual(a.a, 1);
+  return it.done();
+};
 exports.indexBy = function(it){
   var list, obj;
   list = [1, 9, 3];
@@ -256,5 +296,10 @@ exports.capitalize = function(it){
 exports.isArray = function(it){
   it.strictEqual(_.isArray([]), true);
   it.strictEqual(_.isArray({}), false);
+  return it.done();
+};
+exports.isObject = function(it){
+  it.strictEqual(_.isObject([]), false);
+  it.strictEqual(_.isObject({}), true);
   return it.done();
 };

@@ -146,6 +146,29 @@ exports import
 		it.strictEqual (_.map-number -0.5, 0, 1, 0, 1, {exponent:2.1}), -(0.5^2.1)
 		it.strictEqual (_.map-number 0, 0, 1, 100, 0), 100
 		it.done!
+	is-numeric: ->
+		it.strictEqual (_.is-numeric 1), true
+		it.strictEqual (_.is-numeric '50.34'), true
+		it.strictEqual (_.is-numeric '50.34b'), false
+		it.strictEqual (_.is-numeric '0x50.34'), false
+		it.strictEqual (_.is-numeric '0x50.34'), false
+		it.strictEqual (_.is-numeric {}), false
+		it.strictEqual (_.is-numeric '-23.23'), true
+		it.strictEqual (_.is-numeric '-23.23.23'), false
+		it.done!
+	import: ->
+		a = {a:1}
+		b = {b:2}
+		_.import b, a, {a:2}
+		it.strictEqual b.a, 2
+		it.done!
+	new-object: ->
+		a = {a:1}
+		b = {b:2}
+		c = _.new-object a, {a:2}
+		it.strictEqual c.a, 2
+		it.strictEqual a.a, 1
+		it.done!
 	index-by: ->
 		list = [1, 9, 3]
 		it.strictEqual (_.index-by _.maximum, list), 1, 'Index of highest number is 1'
@@ -174,4 +197,8 @@ exports import
 	is-array: ->
 		it.strictEqual (_.is-array []), true
 		it.strictEqual (_.is-array {}), false
+		it.done!
+	is-object: ->
+		it.strictEqual (_.is-object []), false
+		it.strictEqual (_.is-object {}), true
 		it.done!

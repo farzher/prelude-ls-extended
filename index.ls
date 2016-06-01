@@ -137,9 +137,12 @@ _.map-number = (value, from1, from2, to1, to2, o=null) ->
     if is-negative => ratio = -ratio
   b-dist * ratio + to1
 
+_.is-numeric = (n) -> !(isNaN parseFloat n) && isFinite n
+
 ## Obj
 
-
+_.import = Object.assign
+_.new-object = (...rest) -> Object.assign {}, ...rest
 
 
 
@@ -200,6 +203,7 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 
 # -> bool
 _.is-array = -> typeof! it is 'Array'
+_.is-object = -> typeof! it is 'Object'
 
 
 
