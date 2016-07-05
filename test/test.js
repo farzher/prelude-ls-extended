@@ -129,6 +129,7 @@ exports.compareArr = function(it){
 };
 exports['in'] = function(it){
   it.strictEqual(_['in'](1, [2, 2, 1]), true);
+  it.strictEqual(_['in']('1', [2, 2, 1]), false);
   return it.done();
 };
 exports.variance = function(it){

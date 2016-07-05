@@ -92,6 +92,7 @@ exports import
 		it.done!
 	in: ->
 		it.strictEqual (_.in 1, [2,2,1]), true
+		it.strictEqual (_.in '1', [2,2,1]), false
 		it.done!
 	variance: ->
 		it.strictEqual (_.variance [1 to 11]), 10
