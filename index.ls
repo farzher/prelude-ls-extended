@@ -58,11 +58,13 @@ _.batch = (count, list) ->
   while list.length => list.splice 0, count
 
 # -> bool
-_.compare-array = (arr1, arr2) ->
+_.compare-arr = (arr1, arr2) ->
   return false if arr1.length isnt arr2.length
   for , k in arr1 => return false if arr1[k] isnt arr2[k]
   true
 
+# -> bool
+_.in = (x, arr) -> x in arr
 
 
 ## Math
@@ -96,7 +98,7 @@ _.chance = (num=0.5) -> Math.random! < num
 _.negate-if = (b, x) -> if b then -x else x
 
 # -> bool
-_.flip-if = (b, v) -> if b then not v else v
+_.toggle-if = (b, v) -> if b then not v else v
 
 # mixed -> int
 _.to-bit = -> if it then 1 else 0
@@ -142,7 +144,7 @@ _.is-numeric = (n) -> !(isNaN parseFloat n) && isFinite n
 ## Obj
 
 _.import = Object.assign
-_.new-object = (...rest) -> Object.assign {}, ...rest
+_.new-obj = (...rest) -> Object.assign {}, ...rest
 
 
 
@@ -171,6 +173,9 @@ _.index-by = (f, item) ->
 
 
 ## String
+
+# -> bool
+_.is-str = -> typeof! it is 'String'
 
 # -> str
 _.chr = (int) -> String.from-char-code int
@@ -202,8 +207,18 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 ## Util
 
 # -> bool
-_.is-array = -> typeof! it is 'Array'
-_.is-object = -> typeof! it is 'Object'
+_.is-arr = -> typeof! it is 'Array'
+# -> bool
+_.is-obj = -> typeof! it is 'Object'
+# -> bool
+_.is-bool = -> typeof! it is 'Boolean'
+# -> bool
+_.is-num = -> typeof! it is 'Number'
+# -> str
+_.to-json = -> try JSON.stringify it
+# -> mixed
+# If there's any error, this returns undefined instead of throwing an error
+_.json-parse = -> try JSON.parse it
 
 
 
@@ -213,6 +228,11 @@ _.flip-reject = _.flip _.reject
 _.flip-filter = _.flip _.filter
 _.flip-set-timeout = _.flip set-timeout
 
+# Deprecated
+_.is-array = _.is-arr
+_.is-object = _.is-obj
+_.compare-array = _.compare-arr
+_.flip-if = _.toggle-if
 
 
 module.exports = _

@@ -83,12 +83,15 @@ exports import
 		it.strictEqual (_.batch list.length, list).length, 1
 		it.strictEqual (_.batch '-1', list).length, 0, 'Batching by a broken amount should return []'
 		it.done!
-	compare-array: ->
-		it.strictEqual (_.compare-array [1 2 3], [1 2 3]), true
-		it.strictEqual (_.compare-array [1 {} 3], [1 {} 3]), false, 'Different objects should be different'
-		it.strictEqual (_.compare-array [1], [1 1]), false, 'Different size arrays should be different'
+	compare-arr: ->
+		it.strictEqual (_.compare-arr [1 2 3], [1 2 3]), true
+		it.strictEqual (_.compare-arr [1 {} 3], [1 {} 3]), false, 'Different objects should be different'
+		it.strictEqual (_.compare-arr [1], [1 1]), false, 'Different size arrays should be different'
 		temp = {}
-		it.strictEqual (_.compare-array [22, temp], [22, temp]), true, 'Same objects should be the same'
+		it.strictEqual (_.compare-arr [22, temp], [22, temp]), true, 'Same objects should be the same'
+		it.done!
+	in: ->
+		it.strictEqual (_.in 1, [2,2,1]), true
 		it.done!
 	variance: ->
 		it.strictEqual (_.variance [1 to 11]), 10
@@ -112,11 +115,11 @@ exports import
 		it.strictEqual (_.negate-if true, 5), -5
 		it.strictEqual (_.negate-if false, 5), 5
 		it.done!
-	flip-if: ->
-		it.strictEqual (_.flip-if true, true), false
-		it.strictEqual (_.flip-if false, false), false
-		it.strictEqual (_.flip-if 5, 5), false
-		it.strictEqual (_.flip-if true, 0), true
+	toggle-if: ->
+		it.strictEqual (_.toggle-if true, true), false
+		it.strictEqual (_.toggle-if false, false), false
+		it.strictEqual (_.toggle-if 5, 5), false
+		it.strictEqual (_.toggle-if true, 0), true
 		it.done!
 	to-bit: ->
 		it.strictEqual (_.to-bit true), 1
@@ -162,10 +165,10 @@ exports import
 		_.import b, a, {a:2}
 		it.strictEqual b.a, 2
 		it.done!
-	new-object: ->
+	new-obj: ->
 		a = {a:1}
 		b = {b:2}
-		c = _.new-object a, {a:2}
+		c = _.new-obj a, {a:2}
 		it.strictEqual c.a, 2
 		it.strictEqual a.a, 1
 		it.done!
@@ -174,6 +177,9 @@ exports import
 		it.strictEqual (_.index-by _.maximum, list), 1, 'Index of highest number is 1'
 		obj = {butts: 1, cats: 9, rocks: 3}
 		it.strictEqual (_.index-by _.minimum, obj), 'butts', 'Index of lowest number is butts'
+		it.done!
+	is-str: ->
+		it.strictEqual (_.is-str '1'), true
 		it.done!
 	chr: ->
 		it.strictEqual (_.chr 97), 'a'
@@ -194,11 +200,29 @@ exports import
 	capitalize: ->
 		it.strictEqual (_.capitalize 'cats'), 'Cats'
 		it.done!
-	is-array: ->
-		it.strictEqual (_.is-array []), true
-		it.strictEqual (_.is-array {}), false
+	is-arr: ->
+		it.strictEqual (_.is-arr []), true
+		it.strictEqual (_.is-arr {}), false
 		it.done!
-	is-object: ->
-		it.strictEqual (_.is-object []), false
-		it.strictEqual (_.is-object {}), true
+	is-obj: ->
+		it.strictEqual (_.is-obj []), false
+		it.strictEqual (_.is-obj {}), true
+		it.done!
+	is-bool: ->
+		it.strictEqual (_.is-bool false), true
+		it.strictEqual (_.is-bool 1), false
+		it.done!
+	is-num: ->
+		it.strictEqual (_.is-num 0), true
+		it.strictEqual (_.is-num '1'), false
+		it.done!
+	to-json: ->
+		circular={};circular.circular=circular
+		it.strictEqual (_.to-json {a:1}), '{"a":1}'
+		it.strictEqual (_.to-json circular), undefined
+		it.strictEqual (_.to-json '{NOT} JSON'), (JSON.stringify '{NOT} JSON')
+		it.done!
+	json-parse: ->
+		it.strictEqual (_.json-parse '{"a":1}')a, 1
+		it.strictEqual (_.json-parse 'NOT JSON'), undefined
 		it.done!

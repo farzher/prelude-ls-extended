@@ -118,13 +118,17 @@ exports.batch = function(it){
   it.strictEqual(_.batch('-1', list).length, 0, 'Batching by a broken amount should return []');
   return it.done();
 };
-exports.compareArray = function(it){
+exports.compareArr = function(it){
   var temp;
-  it.strictEqual(_.compareArray([1, 2, 3], [1, 2, 3]), true);
-  it.strictEqual(_.compareArray([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
-  it.strictEqual(_.compareArray([1], [1, 1]), false, 'Different size arrays should be different');
+  it.strictEqual(_.compareArr([1, 2, 3], [1, 2, 3]), true);
+  it.strictEqual(_.compareArr([1, {}, 3], [1, {}, 3]), false, 'Different objects should be different');
+  it.strictEqual(_.compareArr([1], [1, 1]), false, 'Different size arrays should be different');
   temp = {};
-  it.strictEqual(_.compareArray([22, temp], [22, temp]), true, 'Same objects should be the same');
+  it.strictEqual(_.compareArr([22, temp], [22, temp]), true, 'Same objects should be the same');
+  return it.done();
+};
+exports['in'] = function(it){
+  it.strictEqual(_['in'](1, [2, 2, 1]), true);
   return it.done();
 };
 exports.variance = function(it){
@@ -166,11 +170,11 @@ exports.negateIf = function(it){
   it.strictEqual(_.negateIf(false, 5), 5);
   return it.done();
 };
-exports.flipIf = function(it){
-  it.strictEqual(_.flipIf(true, true), false);
-  it.strictEqual(_.flipIf(false, false), false);
-  it.strictEqual(_.flipIf(5, 5), false);
-  it.strictEqual(_.flipIf(true, 0), true);
+exports.toggleIf = function(it){
+  it.strictEqual(_.toggleIf(true, true), false);
+  it.strictEqual(_.toggleIf(false, false), false);
+  it.strictEqual(_.toggleIf(5, 5), false);
+  it.strictEqual(_.toggleIf(true, 0), true);
   return it.done();
 };
 exports.toBit = function(it){
@@ -242,7 +246,7 @@ exports['import'] = function(it){
   it.strictEqual(b.a, 2);
   return it.done();
 };
-exports.newObject = function(it){
+exports.newObj = function(it){
   var a, b, c;
   a = {
     a: 1
@@ -250,7 +254,7 @@ exports.newObject = function(it){
   b = {
     b: 2
   };
-  c = _.newObject(a, {
+  c = _.newObj(a, {
     a: 2
   });
   it.strictEqual(c.a, 2);
@@ -267,6 +271,10 @@ exports.indexBy = function(it){
     rocks: 3
   };
   it.strictEqual(_.indexBy(_.minimum, obj), 'butts', 'Index of lowest number is butts');
+  return it.done();
+};
+exports.isStr = function(it){
+  it.strictEqual(_.isStr('1'), true);
   return it.done();
 };
 exports.chr = function(it){
@@ -293,13 +301,39 @@ exports.capitalize = function(it){
   it.strictEqual(_.capitalize('cats'), 'Cats');
   return it.done();
 };
-exports.isArray = function(it){
-  it.strictEqual(_.isArray([]), true);
-  it.strictEqual(_.isArray({}), false);
+exports.isArr = function(it){
+  it.strictEqual(_.isArr([]), true);
+  it.strictEqual(_.isArr({}), false);
   return it.done();
 };
-exports.isObject = function(it){
-  it.strictEqual(_.isObject([]), false);
-  it.strictEqual(_.isObject({}), true);
+exports.isObj = function(it){
+  it.strictEqual(_.isObj([]), false);
+  it.strictEqual(_.isObj({}), true);
+  return it.done();
+};
+exports.isBool = function(it){
+  it.strictEqual(_.isBool(false), true);
+  it.strictEqual(_.isBool(1), false);
+  return it.done();
+};
+exports.isNum = function(it){
+  it.strictEqual(_.isNum(0), true);
+  it.strictEqual(_.isNum('1'), false);
+  return it.done();
+};
+exports.toJson = function(it){
+  var circular;
+  circular = {};
+  circular.circular = circular;
+  it.strictEqual(_.toJson({
+    a: 1
+  }), '{"a":1}');
+  it.strictEqual(_.toJson(circular), undefined);
+  it.strictEqual(_.toJson('{NOT} JSON'), JSON.stringify('{NOT} JSON'));
+  return it.done();
+};
+exports.jsonParse = function(it){
+  it.strictEqual(_.jsonParse('{"a":1}').a, 1);
+  it.strictEqual(_.jsonParse('NOT JSON'), undefined);
   return it.done();
 };

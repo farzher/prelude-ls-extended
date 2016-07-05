@@ -69,7 +69,7 @@ _.batch = function(count, list){
   }
   return results$;
 };
-_.compareArray = function(arr1, arr2){
+_.compareArr = function(arr1, arr2){
   var i$, len$, k;
   if (arr1.length !== arr2.length) {
     return false;
@@ -81,6 +81,9 @@ _.compareArray = function(arr1, arr2){
     }
   }
   return true;
+};
+_['in'] = function(x, arr){
+  return in$(x, arr);
 };
 _.variance = function(it){
   var avg, sum, i$, len$, v, x;
@@ -136,7 +139,7 @@ _.negateIf = function(b, x){
     return x;
   }
 };
-_.flipIf = function(b, v){
+_.toggleIf = function(b, v){
   if (b) {
     return !v;
   } else {
@@ -213,7 +216,7 @@ _.isNumeric = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 _['import'] = Object.assign;
-_.newObject = function(){
+_.newObj = function(){
   var rest;
   rest = slice$.call(arguments);
   return Object.assign.apply(Object, [{}].concat(slice$.call(rest)));
@@ -239,6 +242,9 @@ _.indexBy = function(f, item){
       }
     }
   }
+};
+_.isStr = function(it){
+  return toString$.call(it).slice(8, -1) === 'String';
 };
 _.chr = function(int){
   return String.fromCharCode(int);
@@ -269,15 +275,40 @@ _.inInsensitive = function(str, arr){
 _.capitalize = function(str){
   return str.substr(0, 1).toUpperCase() + str.substr(1);
 };
-_.isArray = function(it){
+_.isArr = function(it){
   return toString$.call(it).slice(8, -1) === 'Array';
 };
-_.isObject = function(it){
+_.isObj = function(it){
   return toString$.call(it).slice(8, -1) === 'Object';
+};
+_.isBool = function(it){
+  return toString$.call(it).slice(8, -1) === 'Boolean';
+};
+_.isNum = function(it){
+  return toString$.call(it).slice(8, -1) === 'Number';
+};
+_.toJson = function(it){
+  try {
+    return JSON.stringify(it);
+  } catch (e$) {}
+};
+_.jsonParse = function(it){
+  try {
+    return JSON.parse(it);
+  } catch (e$) {}
 };
 _.flipEach = _.flip(_.each);
 _.flipMap = _.flip(_.map);
 _.flipReject = _.flip(_.reject);
 _.flipFilter = _.flip(_.filter);
 _.flipSetTimeout = _.flip(setTimeout);
+_.isArray = _.isArr;
+_.isObject = _.isObj;
+_.compareArray = _.compareArr;
+_.flipIf = _.toggleIf;
 module.exports = _;
+function in$(x, xs){
+  var i = -1, l = xs.length >>> 0;
+  while (++i < l) if (x === xs[i]) return true;
+  return false;
+}
