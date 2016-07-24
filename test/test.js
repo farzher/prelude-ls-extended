@@ -312,6 +312,11 @@ exports.isObj = function(it){
   it.strictEqual(_.isObj({}), true);
   return it.done();
 };
+exports.isFunc = function(it){
+  it.strictEqual(_.isFunc(false), false);
+  it.strictEqual(_.isFunc(function(){}), true);
+  return it.done();
+};
 exports.isBool = function(it){
   it.strictEqual(_.isBool(false), true);
   it.strictEqual(_.isBool(1), false);

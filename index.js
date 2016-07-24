@@ -275,6 +275,9 @@ _.inInsensitive = function(str, arr){
 _.capitalize = function(str){
   return str.substr(0, 1).toUpperCase() + str.substr(1);
 };
+_.isFunc = function(it){
+  return toString$.call(it).slice(8, -1) === 'Function';
+};
 _.isArr = function(it){
   return toString$.call(it).slice(8, -1) === 'Array';
 };

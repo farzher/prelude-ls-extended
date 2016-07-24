@@ -207,6 +207,8 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 ## Util
 
 # -> bool
+_.is-func = -> typeof! it is 'Function'
+# -> bool
 _.is-arr = -> typeof! it is 'Array'
 # -> bool
 _.is-obj = -> typeof! it is 'Object'

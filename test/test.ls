@@ -209,6 +209,10 @@ exports import
 		it.strictEqual (_.is-obj []), false
 		it.strictEqual (_.is-obj {}), true
 		it.done!
+	is-func: ->
+		it.strictEqual (_.is-func false), false
+		it.strictEqual (_.is-func ->), true
+		it.done!
 	is-bool: ->
 		it.strictEqual (_.is-bool false), true
 		it.strictEqual (_.is-bool 1), false
