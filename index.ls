@@ -51,6 +51,8 @@ _.where = (query, arr) ->
     true
   [a for a in arr when test a]
 
+# TODO: add some kind of group-map which allows you to map the grouped value (for mapping arrays to objects)
+
 # -> [[]*]
 _.batch = (count, list) ->
   count = Number count; if count < 1 => return []
