@@ -224,6 +224,18 @@ _.to-json = -> try JSON.stringify it
 # If there's any error, this returns undefined instead of throwing an error
 _.json-parse = -> try JSON.parse it
 
+# @usage on('resize', _.debounce(onResize, 100))
+_.debounce = (func, wait, immediate) !->
+  var timeout
+  return !->
+    context = @; args = arguments
+    later = !->
+      timeout := null
+      if !immediate => func.apply context, args
+    call-now = immediate and !timeout
+    clearTimeout timeout
+    timeout := setTimeout later, wait
+    if call-now => func.apply context, args
 
 
 _.flip-each = _.flip _.each

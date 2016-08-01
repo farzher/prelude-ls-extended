@@ -231,3 +231,16 @@ exports import
 		it.strictEqual (_.json-parse '{"a":1}')a, 1
 		it.strictEqual (_.json-parse 'NOT JSON'), undefined
 		it.done!
+	debounce: ->
+		nodeunit = it
+		nodeunit.expect 1
+
+		funcToDebounce = !->
+			nodeunit.ok 1
+			nodeunit.done!
+
+		debounced = _.debounce funcToDebounce, 100
+		debounced!
+		debounced!
+		debounced!
+		debounced!
