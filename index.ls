@@ -141,7 +141,6 @@ _.map-number = (value, from1, from2, to1, to2, o=null) ->
     if is-negative => ratio = -ratio
   b-dist * ratio + to1
 
-_.is-numeric = (n) -> !(isNaN parseFloat n) && isFinite n
 
 ## Obj
 
@@ -208,21 +207,20 @@ _.capitalize = (str) -> (str.substr 0, 1)toUpperCase! + str.substr 1
 
 ## Util
 
-# -> bool
 _.is-func = -> typeof! it is 'Function'
-# -> bool
 _.is-arr = -> typeof! it is 'Array'
-# -> bool
 _.is-obj = -> typeof! it is 'Object'
-# -> bool
 _.is-bool = -> typeof! it is 'Boolean'
-# -> bool
 _.is-num = -> typeof! it is 'Number'
+_.is-promise = -> typeof! it.then is 'Function'
+_.is-numeric = (n) -> !(isNaN parseFloat n) && isFinite n
+_.is-numeric-int = (x) -> Number.isInteger (Number x)
 # -> str
 _.to-json = -> try JSON.stringify it
 # -> mixed
 # If there's any error, this returns undefined instead of throwing an error
 _.json-parse = -> try JSON.parse it
+_.from-json = _.json-parse # Alias, can't decide what name is better
 
 # @usage on('resize', _.debounce(onResize, 100))
 _.debounce = (func, wait, immediate) !->

@@ -222,17 +222,6 @@ exports.mapNumber = function(it){
   it.strictEqual(_.mapNumber(0, 0, 1, 100, 0), 100);
   return it.done();
 };
-exports.isNumeric = function(it){
-  it.strictEqual(_.isNumeric(1), true);
-  it.strictEqual(_.isNumeric('50.34'), true);
-  it.strictEqual(_.isNumeric('50.34b'), false);
-  it.strictEqual(_.isNumeric('0x50.34'), false);
-  it.strictEqual(_.isNumeric('0x50.34'), false);
-  it.strictEqual(_.isNumeric({}), false);
-  it.strictEqual(_.isNumeric('-23.23'), true);
-  it.strictEqual(_.isNumeric('-23.23.23'), false);
-  return it.done();
-};
 exports['import'] = function(it){
   var a, b;
   a = {
@@ -322,9 +311,45 @@ exports.isBool = function(it){
   it.strictEqual(_.isBool(1), false);
   return it.done();
 };
+exports.isPromise = function(it){
+  var p, pLike, notP;
+  p = new Promise(function(resolve, reject){});
+  pLike = {
+    then: function(){}
+  };
+  notP = {
+    then: true
+  };
+  it.strictEqual(_.isPromise(p), true);
+  it.strictEqual(_.isPromise(pLike), true);
+  it.strictEqual(_.isPromise(notP), false);
+  return it.done();
+};
 exports.isNum = function(it){
   it.strictEqual(_.isNum(0), true);
   it.strictEqual(_.isNum('1'), false);
+  return it.done();
+};
+exports.isNumeric = function(it){
+  it.strictEqual(_.isNumeric(1), true);
+  it.strictEqual(_.isNumeric('50.34'), true);
+  it.strictEqual(_.isNumeric('50.34b'), false);
+  it.strictEqual(_.isNumeric('0x50.34'), false);
+  it.strictEqual(_.isNumeric('0x50.34'), false);
+  it.strictEqual(_.isNumeric({}), false);
+  it.strictEqual(_.isNumeric('-23.23'), true);
+  it.strictEqual(_.isNumeric('-23.23.23'), false);
+  return it.done();
+};
+exports.isNumericInt = function(it){
+  it.strictEqual(_.isNumericInt(1), true);
+  it.strictEqual(_.isNumericInt('50.34'), false);
+  it.strictEqual(_.isNumericInt('50.34b'), false);
+  it.strictEqual(_.isNumericInt('0x50'), true);
+  it.strictEqual(_.isNumericInt('0x50.34'), false);
+  it.strictEqual(_.isNumericInt({}), false);
+  it.strictEqual(_.isNumericInt('-23'), true);
+  it.strictEqual(_.isNumericInt('-23.23.23'), false);
   return it.done();
 };
 exports.toJson = function(it){
@@ -351,7 +376,7 @@ exports.debounce = function(it){
     nodeunit.ok(1);
     nodeunit.done();
   };
-  debounced = _.debounce(funcToDebounce, 100);
+  debounced = _.debounce(funcToDebounce, 100, true);
   debounced();
   debounced();
   debounced();

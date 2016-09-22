@@ -212,9 +212,6 @@ _.mapNumber = function(value, from1, from2, to1, to2, o){
   }
   return bDist * ratio + to1;
 };
-_.isNumeric = function(n){
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
 _['import'] = Object.assign;
 _.newObj = function(){
   var rest;
@@ -290,6 +287,15 @@ _.isBool = function(it){
 _.isNum = function(it){
   return toString$.call(it).slice(8, -1) === 'Number';
 };
+_.isPromise = function(it){
+  return toString$.call(it.then).slice(8, -1) === 'Function';
+};
+_.isNumeric = function(n){
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
+_.isNumericInt = function(x){
+  return Number.isInteger(Number(x));
+};
 _.toJson = function(it){
   try {
     return JSON.stringify(it);
@@ -300,6 +306,7 @@ _.jsonParse = function(it){
     return JSON.parse(it);
   } catch (e$) {}
 };
+_.fromJson = _.jsonParse;
 _.debounce = function(func, wait, immediate){
   var timeout;
   return function(){

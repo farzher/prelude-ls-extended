@@ -150,16 +150,6 @@ exports import
 		it.strictEqual (_.map-number -0.5, 0, 1, 0, 1, {exponent:2.1}), -(0.5^2.1)
 		it.strictEqual (_.map-number 0, 0, 1, 100, 0), 100
 		it.done!
-	is-numeric: ->
-		it.strictEqual (_.is-numeric 1), true
-		it.strictEqual (_.is-numeric '50.34'), true
-		it.strictEqual (_.is-numeric '50.34b'), false
-		it.strictEqual (_.is-numeric '0x50.34'), false
-		it.strictEqual (_.is-numeric '0x50.34'), false
-		it.strictEqual (_.is-numeric {}), false
-		it.strictEqual (_.is-numeric '-23.23'), true
-		it.strictEqual (_.is-numeric '-23.23.23'), false
-		it.done!
 	import: ->
 		a = {a:1}
 		b = {b:2}
@@ -217,9 +207,37 @@ exports import
 		it.strictEqual (_.is-bool false), true
 		it.strictEqual (_.is-bool 1), false
 		it.done!
+	is-promise: ->
+		p = new Promise (resolve, reject) !->
+		p-like = {then: ->}
+		not-p = {then: true}
+		it.strictEqual (_.is-promise p), true
+		it.strictEqual (_.is-promise p-like), true
+		it.strictEqual (_.is-promise not-p), false
+		it.done!
 	is-num: ->
 		it.strictEqual (_.is-num 0), true
 		it.strictEqual (_.is-num '1'), false
+		it.done!
+	is-numeric: ->
+		it.strictEqual (_.is-numeric 1), true
+		it.strictEqual (_.is-numeric '50.34'), true
+		it.strictEqual (_.is-numeric '50.34b'), false
+		it.strictEqual (_.is-numeric '0x50.34'), false
+		it.strictEqual (_.is-numeric '0x50.34'), false
+		it.strictEqual (_.is-numeric {}), false
+		it.strictEqual (_.is-numeric '-23.23'), true
+		it.strictEqual (_.is-numeric '-23.23.23'), false
+		it.done!
+	is-numeric-int: ->
+		it.strictEqual (_.is-numeric-int 1), true
+		it.strictEqual (_.is-numeric-int '50.34'), false
+		it.strictEqual (_.is-numeric-int '50.34b'), false
+		it.strictEqual (_.is-numeric-int '0x50'), true
+		it.strictEqual (_.is-numeric-int '0x50.34'), false
+		it.strictEqual (_.is-numeric-int {}), false
+		it.strictEqual (_.is-numeric-int '-23'), true
+		it.strictEqual (_.is-numeric-int '-23.23.23'), false
 		it.done!
 	to-json: ->
 		circular={};circular.circular=circular
@@ -239,7 +257,7 @@ exports import
 			nodeunit.ok 1
 			nodeunit.done!
 
-		debounced = _.debounce funcToDebounce, 100
+		debounced = _.debounce funcToDebounce, 100, true
 		debounced!
 		debounced!
 		debounced!
