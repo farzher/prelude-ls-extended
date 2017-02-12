@@ -285,13 +285,13 @@ _.isBool = function(it){
   return toString$.call(it).slice(8, -1) === 'Boolean';
 };
 _.isNum = function(it){
-  return toString$.call(it).slice(8, -1) === 'Number';
+  return toString$.call(it).slice(8, -1) === 'Number' && !isNan(it);
 };
 _.isPromise = function(it){
   return toString$.call(it.then).slice(8, -1) === 'Function';
 };
 _.isNumeric = function(n){
-  return !isNaN(parseFloat(n)) && isFinite(n);
+  return !isNaN(+n) && isFinite(n);
 };
 _.isNumericInt = function(x){
   return Number.isInteger(Number(x));

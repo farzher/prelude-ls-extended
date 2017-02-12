@@ -211,9 +211,9 @@ _.is-func = -> typeof! it is 'Function'
 _.is-arr = -> typeof! it is 'Array'
 _.is-obj = -> typeof! it is 'Object'
 _.is-bool = -> typeof! it is 'Boolean'
-_.is-num = -> typeof! it is 'Number'
+_.is-num = -> typeof! it is 'Number' and !(isNan it)
 _.is-promise = -> typeof! it.then is 'Function'
-_.is-numeric = (n) -> !(isNaN parseFloat n) && isFinite n
+_.is-numeric = (n) -> !(isNaN +n) && isFinite n
 _.is-numeric-int = (x) -> Number.isInteger (Number x)
 # -> str
 _.to-json = -> try JSON.stringify it
